@@ -61,4 +61,17 @@ module.exports = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
+
+  publishers: [
+    {
+      name: "@electron-forge/publisher-github",
+      config: {
+        repository: {
+          owner: "gregorycowley",
+          owner: "gregorycowley",
+          name: "ixd-tangible-player"
+        }
+      }
+    }
+  ]
 };
