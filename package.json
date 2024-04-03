@@ -1,7 +1,7 @@
 {
-  "name": "cca-electron-nodejs",
-  "version": "1.0.0",
-  "description": "",
+  "name": "cca-tangible-player",
+  "version": "0.1.0-alpha",
+  "description": "Player for interactions using the Tangible Engine",
   "main": ".webpack/main",
   "scripts": {
     "build": "electron-forge start",
@@ -28,6 +28,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.3.1",
     "@electron-forge/plugin-fuses": "^7.3.1",
     "@electron-forge/plugin-webpack": "^7.3.1",
+    "@electron-forge/publisher-github": "^7.3.1",
     "@electron/fuses": "^1.8.0",
     "@vercel/webpack-asset-relocator-loader": "^1.7.3",
     "babel-loader": "^9.1.3",
