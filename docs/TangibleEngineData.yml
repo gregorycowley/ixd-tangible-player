@@ -1,0 +1,56 @@
+0:
+  Id: 82
+  PatternId: 3
+  PointerIds: Array(3)
+    0: 2
+    1: -1
+    2: 6
+    length: 3
+    __proto__: Array(0)
+  Pos:
+    x: 2088.90747
+    y: 855.5429
+    __proto__: Object
+  R: 1.07342064
+  RMSNormalized: -0.112968467
+  X: 2088.90747
+  Y: 855.5429
+  __proto__: Object
+1:
+  Id: 83
+  PatternId: 7
+  PointerIds: Array(3)
+    0: -1
+    1: 4
+    2: 0
+    length: 3
+    __proto__: Array(0)
+  Pos:
+    x: 1912.33691
+    y: 898.359
+    __proto__: Object
+  R: 2.8344698
+  RMSNormalized: -0.113064311
+  X: 1912.33691
+  Y: 898.359
+  __proto__: Object
+2:
+  Id: 85
+  PatternId: 1
+  PointerIds: Array(3)
+    0: 8
+    1: -1
+    2: -1
+    length: 3
+    __proto__: Array(0)
+  Pos:
+    x: 2344.21387
+    y: 670.734436
+    __proto__: Object
+  R: 3.01122355
+  RMSNormalized: -0.155307963
+  X: 2344.21387
+  Y: 670.734436
+  __proto__: Object
+length: 3
+__proto__: Array(0)

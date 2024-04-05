@@ -1,8 +1,9 @@
 // main.js
 // https://www.electronforge.io/config/plugins/webpack
 
-const { app, BrowserWindow } = require('electron')
-const path = require('node:path')
+const { app, BrowserWindow } = require('electron');
+const { TangibleEngineConnect } = require('../tangible-engine/TangibleEngineConnect');
+const path = require('node:path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -39,6 +40,8 @@ const createWindow = () => {
   
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
   mainWindow.webContents.openDevTools();
+  TangibleEngineConnect();
+
 };
 
 app.whenReady().then(() => {
@@ -48,6 +51,7 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+  console.log('Sent from main');
 });
 
 app.on('window-all-closed', () => {
