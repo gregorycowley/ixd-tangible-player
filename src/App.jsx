@@ -1,6 +1,7 @@
 import React from 'react';
-import DataViewer from './components/DataViewer.js';
-import Button from '@mui/material/Button';
+// import DataViewer from './components/DataViewer.js';
+// import Button from '@mui/material/Button';
+import Season from './components/tea-ceremony/Season.jsx';
 // import { Puck } from './components/Puck.jsx';
 // import Welcome from './components/Welcome.jsx';
 
@@ -15,8 +16,9 @@ const exampleObject = {
 function App() {
   return (
     <div>
-      <Button></Button>
-      <DataViewer dataObject={exampleObject} />
+      {/* <Button></Button>
+      <DataViewer dataObject={exampleObject} /> */}
+      <Season />
     </div>
   );
 }
