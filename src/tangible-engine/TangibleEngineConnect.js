@@ -4,17 +4,18 @@
 
 const {screen} = require('electron');
 
-const TangibleEngineConnect = () => {
-  console.log('TangibleEngineConnect');
+const TangibleEngineConnect = ( callback ) => {
 
+  console.log('TangibleEngineConnect');
+  
   const TangibleEngine = require('./TangibleEngine').default;
-  const te = new TangibleEngine();
+  const te = new TangibleEngine( 4949, '10.211.55.5');
+
+  // callback('Dummy Data');
 
   te.scaleFunc = (x,y)=>{
     return screen.dipToScreenPoint({x:x,y:y});
   };
-
-  const tangible = document.querySelector('.tangible');
 
   te.on('patterns', response => {
     console.log(response);
@@ -24,55 +25,18 @@ const TangibleEngineConnect = () => {
   te.on('disconnect', () => console.log('Disconnected from service'));
 
   te.on('update', response => {
-    if (response.TANGIBLES.length > 0) {
-      showTangible(tangible);
-      updateTangiblePos(
-        tangible,
-        response.TANGIBLES[0].X,
-        response.TANGIBLES[0].Y
-      );
-      updateTangibleRot(tangible, response.TANGIBLES[0].R);
-    } else {
-      hideTangible(tangible);
-    }
+    console.log('TE update : ', response);
+    callback(response);
   });
 
   te.init();
 
-  const pulse = (msg) => {
-    console.log('>> ', msg);
-  };
-  
-  const hideTangible = (tangible) => {
-    tangible.style.opacity = 0;
-  };
-  
-  const showTangible = (tangible) => {
-    tangible.style.opacity = 1;
-  };
-  
-  const updateTangiblePos = (tangible, x, y) => {
-    let newPoint = screen.screenToDipPoint({x:x,y:y});
-    const bounds = tangible.getBoundingClientRect();
-    tangible.style.left = `${(newPoint.x - bounds.x) * 0.5 +
-      bounds.x -
-      tangible.clientWidth / 4}px`;
-    tangible.style.top = `${(newPoint.y - bounds.y) * 0.5 +
-      bounds.y -
-      tangible.clientHeight / 4}px`;
-  };
-  
-  const updateTangibleRot = (tangible, radian) => {
-    tangible.style.transform = `rotate(${radian * 57.29578}deg)`;
-  };
-
-  const pulseInt = setInterval(() => {
-    pulse('pulse');
-  }
-  , 1000);
+  // const pulseInt = setInterval(() => {
+  //   callback({TANGIBLES:[]});
+  // }
+  // , 1000);
 
   return te;
-
 };
 
 

@@ -12,3 +12,12 @@
 //     replaceText(`${dependency}-version`, process.versions[dependency])
 //   }
 // })
+
+
+const { contextBridge, ipcRenderer } = require('electron/renderer');
+
+contextBridge.exposeInMainWorld('electronAPI', {
+  startTangibleEngine: (msg) => ipcRenderer.send('start-tangible-engine', msg),
+  onUpdateRenderer: (callback) => ipcRenderer.on('update-renderer', (_event, value) => callback(value))
+});
+

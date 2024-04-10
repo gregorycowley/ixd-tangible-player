@@ -25,6 +25,10 @@ module.exports = [
         presets: ['@babel/preset-react']
       }
     }
+  },
+  {
+    test: /\.(png|jpg|gif|svg|glb|gif|mov)$/,
+    type: 'asset/resource'
   }
 
   // Put your webpack loader rules in this array.  This is where you would put

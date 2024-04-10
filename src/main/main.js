@@ -1,7 +1,7 @@
 // main.js
 // https://www.electronforge.io/config/plugins/webpack
 
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const { TangibleEngineConnect } = require('../tangible-engine/TangibleEngineConnect');
 const path = require('node:path');
 
@@ -40,8 +40,27 @@ const createWindow = () => {
   
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
   mainWindow.webContents.openDevTools();
-  TangibleEngineConnect();
 
+  const updateRenderer = (tangibleData) => {
+    console.log('updateRenderer', tangibleData);
+    try {
+      mainWindow.webContents.send('update-renderer', tangibleData);
+    }
+    catch (e) {
+      console.log('Error at updateRenderer : ', e);
+    }
+  };
+
+  ipcMain.on('start-tangible-engine', (event, msg) => {
+    console.log('ipcMain start-tangible-engine : ', msg);
+    try {
+      const te = TangibleEngineConnect(updateRenderer);
+    }
+    catch (e) {
+      console.log('Error at TangibleEngineConnect : ', e);
+    }
+  });
+  
 };
 
 app.whenReady().then(() => {
