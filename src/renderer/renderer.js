@@ -80,5 +80,5 @@ window.electronAPI.onUpdateRenderer((tangibleData) => {
   // window.electronAPI.counterValue(newValue)
 });
 
-window.electronAPI.startTangibleEngine('Hello from renderer.js!');
-console.log('👋 This message is being logged by "renderer.js", included via webpack', tangibleElement);
+// window.electronAPI.startTangibleEngine('Hello from renderer.js!');
+// console.log('👋 This message is being logged by "renderer.js", included via webpack', tangibleElement);

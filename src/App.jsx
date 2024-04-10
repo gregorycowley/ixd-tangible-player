@@ -15,11 +15,11 @@ const exampleObject = {
 
 function App() {
   return (
-    <div>
+    <>
       {/* <Button></Button>
       <DataViewer dataObject={exampleObject} /> */}
       <Season />
-    </div>
+    </>
   );
 }
 
