@@ -1,41 +1,14 @@
-
-import React, { forwardRef, useImperativeHandle, useRef, useEffect } from 'react';
+// VideoPlayer.jsx
+/* 
+  This component is intentionally minimal. The use of ForwardRef
+  appears to limit to add imperative methods.
+*/
+import React, { forwardRef } from 'react';
 
 const VideoPlayer = forwardRef((props , ref) => {
-  const videoRef = useRef(null);
-
-  useImperativeHandle(ref, () => {
-    getCurrentTime: () => videoRef.current.currentTime;
-  });
-
-  const handleKeyPress = (e) => {
-    const video = videoRef.current;
-    if (!video) return;
-    switch (e.key) {
-    case ' ':
-      if (video.paused) video.play();
-      else video.pause();
-      break;
-    case 'ArrowRight':
-      video.currentTime += 10; // Fast forward 10 seconds
-      break;
-    case 'ArrowLeft':
-      video.currentTime -= 10; // Rewind 10 seconds
-      break;
-    default:
-      break;
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-    };
-  }, []);
 
   return (
-    <video ref={videoRef} src={props.src} width="640" >
+    <video style={props.style} ref={ref} src={props.src} width="640" autoPlay loop>
       Your browser does not support the video tag.
     </video>
   );

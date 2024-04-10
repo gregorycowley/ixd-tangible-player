@@ -3,46 +3,40 @@
 
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { TangibleEngineConnect } = require('../tangible-engine/TangibleEngineConnect');
+const { debug } = require('../util/debug.js');
 const path = require('node:path');
+// const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+
+// console.log("MAIN_WINDOW_WEBPACK_ENTRY :: ", MAIN_WINDOW_WEBPACK_ENTRY );
+// MAIN_WINDOW_WEBPACK_ENTRY ::  http://localhost:3000/main_window
+const webpackEntry = MAIN_WINDOW_WEBPACK_ENTRY;
+
+// console.log("MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY :: ", MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY);
+// MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY ::  /Users/gregorycowley/Projects/cca-code-library/CCA-ClassKit/Projects/electron/ixd-tangible-player/.webpack/renderer/main_window/preload.js
+const webpackPreloadEntry = MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY;
+
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-// const env = process.env.NODE_ENV || 'development';
-// if (env === 'development') { 
-//   require('electron-reload')(__dirname, { 
-//       electron: path.join(__dirname, '..', '..', 'node_modules', '.bin', 'electron'), 
-//       hardResetMethod: 'exit'
-//   }); 
-// } 
-
 const createWindow = () => {
-  // console.log("MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY :: ", MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY);
-  // MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY ::  /Users/gregorycowley/Projects/cca-code-library/CCA-ClassKit/Projects/electron/ixd-tangible-player/.webpack/renderer/main_window/preload.js
-  
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 1000,
     webPreferences: {
-      // nodeIntegration: true,
-      // preload: path.join(__dirname, 'preload.js')
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
+      nodeIntegration: true,
+      preload: webpackPreloadEntry
     }
   });
 
-  // mainWindow.loadFile('./src/ui/index.html')
-  
-  // console.log("MAIN_WINDOW_WEBPACK_ENTRY :: ", MAIN_WINDOW_WEBPACK_ENTRY );
-  // MAIN_WINDOW_WEBPACK_ENTRY ::  http://localhost:3000/main_window
-  
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  mainWindow.loadURL(webpackEntry);
+
   mainWindow.webContents.openDevTools();
 
   const updateRenderer = (tangibleData) => {
-    console.log('updateRenderer', tangibleData);
+    debug('updateRenderer', tangibleData);
     try {
       mainWindow.webContents.send('update-renderer', tangibleData);
     }
@@ -52,7 +46,7 @@ const createWindow = () => {
   };
 
   ipcMain.on('start-tangible-engine', (event, msg) => {
-    console.log('ipcMain start-tangible-engine : ', msg);
+    debug('ipcMain start-tangible-engine : ', msg);
     try {
       const te = TangibleEngineConnect(updateRenderer);
     }
@@ -60,7 +54,6 @@ const createWindow = () => {
       console.log('Error at TangibleEngineConnect : ', e);
     }
   });
-  
 };
 
 app.whenReady().then(() => {
@@ -70,7 +63,10 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
-  console.log('Sent from main');
+  // installExtension(REACT_DEVELOPER_TOOLS)
+  //   .then((name) => console.log(`Added Extension:  ${name}`))
+  //   .catch((err) => console.log('An error occurred: ', err));
+  debug('Sent from main');
 });
 
 app.on('window-all-closed', () => {
