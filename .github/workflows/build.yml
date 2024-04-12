@@ -14,7 +14,7 @@ jobs:
     - name: build
       run: npm run make
 
-  build_on_mac:
+  build_on_mac1:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
     - name: build
       run: npm run make
 
-  build_on_mac:
+  build_on_mac2:
     runs-on: macos-latest
     steps: 
     - uses: actions/checkout@v4
