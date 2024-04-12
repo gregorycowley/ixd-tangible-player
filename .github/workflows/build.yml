@@ -30,7 +30,7 @@ jobs:
 
   build_on_mac:
     runs-on: macos-latest
-    steps:
+    steps: 
     - uses: actions/checkout@v4
       with:
         ref: tea-ceremony
