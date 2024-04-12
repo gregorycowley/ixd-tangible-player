@@ -1,4 +1,5 @@
-const doDebug = true;
+const doDebug = false;
+
 const debug = (msg, ...args) => {
   if ( doDebug ){
     console.log('DEBUG : ', msg, args);
