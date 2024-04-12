@@ -1,8 +1,8 @@
 import React from 'react';
 // import DataViewer from './components/DataViewer.js';
 // import Button from '@mui/material/Button';
-import Season from './components/tea-ceremony/Season.jsx';
-// import { Puck } from './components/Puck.jsx';
+// import Season from './components/tea-ceremony/Season.jsx';
+import PuckTray from './components/puck-proxies/PuckTray.jsx';
 // import Welcome from './components/Welcome.jsx';
 
 // Example object with various parameters
@@ -18,7 +18,8 @@ function App() {
     <>
       {/* <Button></Button>
       <DataViewer dataObject={exampleObject} /> */}
-      <Season />
+      {/* <Season /> */}
+      <PuckTray />
     </>
   );
 }

@@ -5,7 +5,8 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const { TangibleEngineConnect } = require('../tangible-engine/TangibleEngineConnect');
 const { debug } = require('../util/debug.js');
 const path = require('node:path');
-// const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+const isDev = require('electron-is-dev');
+const config = require('../config.json');
 
 // console.log("MAIN_WINDOW_WEBPACK_ENTRY :: ", MAIN_WINDOW_WEBPACK_ENTRY );
 // MAIN_WINDOW_WEBPACK_ENTRY ::  http://localhost:3000/main_window
@@ -22,9 +23,15 @@ if (require('electron-squirrel-startup')) {
 }
 
 const createWindow = () => {
+
+  const screenWidth = config.screenWidth;
+  const screenHeight = config.screenHeight;
+  const makeFullscreen = (isDev)? false : true;
+
   const mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 1000,
+    width: screenWidth,
+    height: screenHeight,
+    fullscreen: makeFullscreen,
     webPreferences: {
       nodeIntegration: true,
       preload: webpackPreloadEntry
@@ -33,7 +40,13 @@ const createWindow = () => {
 
   mainWindow.loadURL(webpackEntry);
 
-  mainWindow.webContents.openDevTools();
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  } else {
+    mainWindow.webContents.on('devtools-opened', () => {
+      mainWindow.webContents.closeDevTools();
+    });
+  }
 
   const updateRenderer = (tangibleData) => {
     debug('updateRenderer', tangibleData);
@@ -63,9 +76,6 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
-  // installExtension(REACT_DEVELOPER_TOOLS)
-  //   .then((name) => console.log(`Added Extension:  ${name}`))
-  //   .catch((err) => console.log('An error occurred: ', err));
   debug('Sent from main');
 });
 
