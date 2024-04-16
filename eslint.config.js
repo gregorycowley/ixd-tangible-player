@@ -1,9 +1,12 @@
 /* eslint-disable indent */
+const reactPlugin = require( 'eslint-plugin-react');
+const hooksPlugin = require('eslint-plugin-react-hooks');
 
 module.exports = [
   {
     files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     plugins: {
+      react: reactPlugin,
     },
     languageOptions: {
       parserOptions: {
@@ -13,8 +16,13 @@ module.exports = [
         },
       },
     },
+    settings: {
+      react: {
+        version: 'detect', // You can add this if you get a warning about the React version when you lint
+      },
+    },    
     rules: {
-      // ... any rules you want
+      ...reactPlugin.configs['jsx-runtime'].rules,
       'indent': [ 
         'error',
         2
@@ -34,6 +42,11 @@ module.exports = [
       'no-unused-vars': 'off',
       'no-unreachable': 'off'
      },
-    // ... others are omitted for brevity
-  }
+  },
+  {
+    plugins: {
+      'react-hooks': hooksPlugin,
+    },
+    rules: hooksPlugin.configs.recommended.rules,
+  },
 ];

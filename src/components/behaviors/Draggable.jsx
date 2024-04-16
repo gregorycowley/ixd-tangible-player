@@ -1,64 +1,114 @@
-import React, { useState, useCallback, useRef } from 'react';
-import drag from './drag.svg';
+import React, { useState, useCallback, useRef, useEffect, forwardRef } from 'react';
+import DraggableCS from './DraggableCS.jsx';
 
-function Draggable({children}) {
-  const [isDragging, setIsDragging] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const ref = useRef();
+const Draggable = forwardRef( function Draggable({children, updateHandler}, controlRef) {
+  // const [position, setPosition] = useState({ x: 0, y: 0 });
+  const elementRef = useRef(null);
+  const isDraggable = useRef(false);
+  const offsetRef = useRef({ x: 0, y: 0 });
+  const parameterRef = useRef({ x: 0, y: 0 });
 
-  // This callback initializes the dragging process
-  const onMouseDown = useCallback((event) => {
-    setIsDragging(true);
-    ref.current = {
-      offsetX: event.clientX - position.x,
-      offsetY: event.clientY - position.y,
+  const start = (mouseX, mouseY) => {
+    isDraggable.current = true;
+    controlRef.current.style.cursor = 'grabbing';
+    const elementsCurrentPosition = elementRef.current.getBoundingClientRect();
+    // Offset needs to be relative to the element's position
+    offsetRef.current = {
+      x: mouseX - elementsCurrentPosition.x,
+      y: mouseY - elementsCurrentPosition.y
     };
-  }, [position]);
 
-  // This callback calculates the new position of the component as it's being dragged
-  const onMouseMove = useCallback((event) => {
-    if (isDragging) {
-      const x = event.clientX - ref.current.offsetX;
-      const y = event.clientY - ref.current.offsetY;
-      setPosition({ x, y });
+    // parameterRef.current.isDragging = true;
+    // console.log('Draggable start', offsetRef.current);
+  };
+
+  const move = (x, y) => {
+    // console.log('Draggable move', x, y);
+    elementRef.current.style.left = `${x}px`;
+    elementRef.current.style.top = `${y}px`;
+  };
+
+  const update = (mouseX, mouseY) => {
+    // console.log('Draggable update', mouseX, mouseY );
+    if (isDraggable.current) {
+      parameterRef.current.x = mouseX - offsetRef.current.x;
+      parameterRef.current.y = mouseY - offsetRef.current.y;
+      updateHandler(parameterRef.current.x, parameterRef.current.y); 
+      // move(parameterRef.current.x, parameterRef.current.y); 
     }
-  }, [isDragging]);
+  };
 
-  // This callback ends the dragging process
-  const onMouseUp = useCallback(() => {
-    setIsDragging(false);
+  const end = () => {
+    // console.log('Draggable end');
+    controlRef.current.style.cursor = 'grab';
+    isDraggable.current = false;
+  };
+
+  /*
+    // The event.target is the same as the controlRef.current
+    // Do we even need a controlRef then?
+  */
+  // const onMouseDown = useCallback((event) => {
+  //   // console.log('Draggable onMouseDown', event);
+  //   start(event.clientX, event.clientY);
+  // }, []);
+
+  // const onMouseMove = useCallback((event) => {
+  //   update(event.clientX, event.clientY);
+  // }, []);
+
+  // const onMouseUp = useCallback((event) => {
+  //   // console.log('Draggable onMouseUp', event);
+  //   end();
+  // }, []);
+
+  const onMouseDown = (event) => {
+    // console.log('Draggable onMouseDown', event);
+    start(event.clientX, event.clientY);
+  };
+
+  const onMouseMove = (event) => {
+    // console.log('Draggable onMouseMove', event.clientX, event.clientY);
+    update(event.clientX, event.clientY);
+  };
+
+  const onMouseUp = (event) => {
+    // console.log('Draggable onMouseUp', event);
+    end();
+  };
+
+  useEffect(() => {
+    const hotspotRef = controlRef.current;
+    // console.log('Draggable useEffect', controlRef );
+    // hotspotRef.style.fill = 'red';
+    hotspotRef.addEventListener('mousedown', onMouseDown);
+    hotspotRef.addEventListener('mousemove', onMouseMove);
+    hotspotRef.addEventListener('mouseleave', onMouseUp);
+    hotspotRef.addEventListener('mouseup', onMouseUp);
+    return () => {
+      hotspotRef.removeEventListener('mousedown', onMouseDown);
+      hotspotRef.removeEventListener('mousemove', onMouseMove);
+      hotspotRef.removeEventListener('mouseleave', onMouseUp);
+      hotspotRef.removeEventListener('mouseup', onMouseUp);
+    };
   }, []);
 
-  // Inline styles for the draggable component
-  const styles = {
+  const draggableStyles = {
     position: 'absolute',
-    left: `${position.x}px`,
-    top: `${position.y}px`,
-    cursor: isDragging ? 'grabbing' : 'grab',
-    userSelect: 'none', // Prevents the browser from performing text selection during drag
-    
-    // width: '100px',
-    // height: '100px',
-    // backgroundColor: '#4CAF50', // Just a placeholder color
-    // display: 'flex',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // color: 'white',
-    // borderRadius: '5px'
+    left: '0px',
+    top: '0px',
+    cursor: 'auto',
+    userSelect: 'auto',
+    pointerEvents: 'none',
+    // border: '1px solid red',
   };
 
   return (
-    <div
-      style={styles}
-      onMouseDown={onMouseDown}
-      onMouseMove={isDragging ? onMouseMove : null}
-      onMouseUp={onMouseUp}
-      onMouseLeave={onMouseUp} // Ends drag when the mouse leaves the element area
-    >
-      <img src={drag} />
+    <div ref={elementRef} style={draggableStyles} id="draggable-behavior">
+      <DraggableCS ref={controlRef} />
       {children}
     </div>
   );
-}
+});
 
 export default Draggable;

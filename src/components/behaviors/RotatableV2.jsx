@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import rotate from './rotate.svg';
+import rotate from './rotate-hit-area.svg';
 
 function Rotatable({children}) {
   const [rotation, setRotation] = useState(0); // Initial rotation
@@ -50,10 +50,7 @@ function Rotatable({children}) {
         position: 'absolute',
         width: '150px',
         height: '150px',
-        // backgroundColor: 'lightblue',
-        // lineHeight: '100px',
-        // textAlign: 'center',
-        userSelect: 'none', // Prevent text selection
+        userSelect: 'contain', // Prevent text selection
         cursor: 'grab',
         transform: `rotate(${rotation}deg)`, // Apply the rotation
         transition: 'transform 0.1s' // Smooth transition for rotation

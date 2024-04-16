@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag to Rotate Disk</title>
+    <style>
+        #disk {
+            width: 200px;
+            height: 200px;
+            /* border-radius: 50%; */
+            background-color: #4CAF50;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: grab;
+        }
+        #disk:active {
+            cursor: grabbing;
+        }
+        .center {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div id="disk">
+        <div class="center"></div>
+    </div>
+
+    <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    const disk = document.getElementById('disk');
+    let isDragging = false;
+    let originAngle = 0;
+    let startAngle = 0;
+
+    function calculateAngle(event) {
+        const rect = disk.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+        const deltaX = mouseX - centerX;
+        const deltaY = mouseY - centerY;
+        return Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+    }
+
+    disk.addEventListener('mousedown', (event) => {
+        isDragging = true;
+        startAngle = calculateAngle(event);
+        disk.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (event) => {
+        if (isDragging) {
+            const currentAngle = calculateAngle(event);
+            const deltaAngle = currentAngle - startAngle;
+            disk.style.transform = `rotate(${originAngle + deltaAngle}deg)`;
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (isDragging) {
+            const currentTransform = disk.style.transform;
+            const angleMatch = /rotate\(([-\d.]+)deg\)/.exec(currentTransform);
+            if (angleMatch && angleMatch[1]) {
+                originAngle += parseFloat(angleMatch[1]) - originAngle;
+            }
+            isDragging = false;
+            disk.style.cursor = 'grab';
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
