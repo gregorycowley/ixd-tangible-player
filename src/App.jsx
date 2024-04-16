@@ -1,9 +1,5 @@
-import React from 'react';
-// import DataViewer from './components/DataViewer.js';
-// import Button from '@mui/material/Button';
-// import Season from './components/tea-ceremony/Season.jsx';
+import React, { StrictMode } from 'react';
 import PuckTray from './components/puck-proxies/PuckTray.jsx';
-// import Welcome from './components/Welcome.jsx';
 
 // Example object with various parameters
 const exampleObject = {
@@ -15,12 +11,9 @@ const exampleObject = {
 
 function App() {
   return (
-    <>
-      {/* <Button></Button>
-      <DataViewer dataObject={exampleObject} /> */}
-      {/* <Season /> */}
+    <StrictMode>
       <PuckTray/>
-    </>
+    </StrictMode>
   );
 }
 

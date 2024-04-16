@@ -35,7 +35,7 @@ const draw = (rot) => {
   indicator.style.left = `${offX + pos.x}px`;
   indicator.style.top = `${offY + pos.y}px`;
   // console.log('indicator', indicator);
-}
+};
 
 module.exports.puckView = () => {
   // let rot = 0;
@@ -49,4 +49,4 @@ module.exports.puckView = () => {
       </span>
     </div>
   `;
-}
+};

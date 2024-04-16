@@ -39,6 +39,7 @@ const Behavior = ({ children }) => {
 
   }, [containerRef, dragRef]);
 
+  
   const containerStyles = {
     position: 'absolute',
     left: '0px',
