@@ -2,11 +2,8 @@ import React from 'react';
 import Puck from './puck/Puck.jsx';
 import styled from 'styled-components';
 import Draggable from '../behaviors/Draggable.jsx';
-import Rotatable from '../behaviors/Rotateable.jsx';
-
-// import withDraggable from '../behaviors/withDraggable.jsx';
-
-// const DraggablePuck = withDraggable(Puck);
+import Rotatable from '../behaviors/Rotatable.jsx';
+import Behavior from '../behaviors/Behavior.jsx';
 
 const StyledPuckTray = styled.div`
   display: flex;
@@ -25,13 +22,17 @@ const PuckTray = () => {
   return (
     <>
       {/* <Draggable><Puck color="blue" /></Draggable> */}
-      <Rotatable><Puck color="blue" /></Rotatable>
+      {/* <Draggable><Puck color="blue" /></Draggable> */}
+      {/* <Rotatable></Rotatable> */}
+      {/* <Draggable><Rotatable></Rotatable></Draggable> */}
+      <Behavior id="behavior"><Puck color="blue" /></Behavior>
+      {/* <Rotatable><Draggable></Draggable></Rotatable> */}
       {/* <Draggable><Puck color="green" /></Draggable>
       <Draggable><Puck color="orange" /></Draggable>
       <Draggable><Puck color="purple" /></Draggable>
       <Draggable><Puck color="red" /></Draggable>
       <Draggable><Puck color="yellow" /></Draggable> */}
-      <StyledPuckTray />
+      <StyledPuckTray  id="puck-tray"  />
     </>
   );
 };

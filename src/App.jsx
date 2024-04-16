@@ -19,7 +19,7 @@ function App() {
       {/* <Button></Button>
       <DataViewer dataObject={exampleObject} /> */}
       {/* <Season /> */}
-      <PuckTray />
+      <PuckTray/>
     </>
   );
 }
