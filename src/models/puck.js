@@ -13,4 +13,4 @@ module.exports.puck = function puck( id, name, xOffset, yOffset, radius, status,
     getRotation: () => rotation,
     getRMS: () => rms,
   };
-}
+};

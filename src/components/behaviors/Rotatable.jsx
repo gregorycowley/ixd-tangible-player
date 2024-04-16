@@ -97,7 +97,7 @@ const Rotatable = forwardRef(({children, updateHandler}, rotatableRef) => {
   };
 
   return (
-    <div style={rotatableStyles} ref={rotatableRef} className="rotatable-behavior">
+    <div data-testid="rotatable-behavior" style={rotatableStyles} ref={rotatableRef} className="rotatable-behavior">
       <RotatableCS 
         ref={controlRef}
         rotation={rotation} 

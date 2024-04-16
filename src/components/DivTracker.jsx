@@ -24,9 +24,9 @@ const DivTracker = () => {
   };
 
   const downloadJSON = () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(divsData));
-    exportRef.current.setAttribute("href", dataStr);
-    exportRef.current.setAttribute("download", "divsData.json");
+    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(divsData));
+    exportRef.current.setAttribute('href', dataStr);
+    exportRef.current.setAttribute('download', 'divsData.json');
     exportRef.current.click();
   };
 
