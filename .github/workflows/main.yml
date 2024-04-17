@@ -45,7 +45,9 @@ jobs:
 
       - name: Package Electron app
         uses: samuelmeuli/action-electron-builder@v1
-        # with:
+        with:
+          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs_password: ${{ secrets.mac_certs_password }}
         #   package_root: ./
         #   build_command: npm run dist
         #   args: --publish never
