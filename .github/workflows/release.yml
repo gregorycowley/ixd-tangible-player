@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: 20
       - run: npm i
-      - if: matrix.os == macos-latest
+      - if: runner.os == macos-latest
         run: npm install -g appdmg
       - name: Publish app
         env:
