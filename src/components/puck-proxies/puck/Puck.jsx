@@ -18,35 +18,31 @@ const StyledPuck = styled.img`
   height: 150px;
 `;
 
-const Puck = ({color}) =>  {
-  
+const Puck = ({ color }) => {
   let coloredPuck = puckFile;
-  switch(color) {
-  case 'orange':
-    coloredPuck = puckFileOrange;
-    break;
-  case 'green':
-    coloredPuck = puckFileGreen;
-    break;
-  case 'blue':
-    coloredPuck = puckFileBlue;
-    break;
-  case 'purple':
-    coloredPuck = puckFilePurple;
-    break;
-  case 'red':
-    coloredPuck = puckFileRed;
-    break;
-  case 'yellow':
-    coloredPuck = puckFileYellow;
-    break;
-  default:
-
+  switch (color) {
+    case 'orange':
+      coloredPuck = puckFileOrange;
+      break;
+    case 'green':
+      coloredPuck = puckFileGreen;
+      break;
+    case 'blue':
+      coloredPuck = puckFileBlue;
+      break;
+    case 'purple':
+      coloredPuck = puckFilePurple;
+      break;
+    case 'red':
+      coloredPuck = puckFileRed;
+      break;
+    case 'yellow':
+      coloredPuck = puckFileYellow;
+      break;
+    default:
   }
   // console.log('color:', coloredPuck);
-  return (
-    <StyledPuck src={coloredPuck} alt={`${color} puck svg`} />
-  );
+  return <StyledPuck src={coloredPuck} alt={`${color} puck svg`} />;
 };
 
 export default Puck;

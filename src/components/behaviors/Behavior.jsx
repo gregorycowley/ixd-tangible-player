@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import Draggable from './Draggable.jsx';
 import Rotatable from './Rotatable.jsx';
 
@@ -36,38 +36,31 @@ const Behavior = ({ children }) => {
       // drag.removeEventListener('mousedown', onMouseDown);
       // rotate.removeEventListener('mousedown', onMouseDown);
     };
-
   }, [containerRef, dragRef]);
 
-  
   const containerStyles = {
     position: 'absolute',
     left: '0px',
     top: '0px',
-    transform: 'rotate(0deg)', 
+    transform: 'rotate(0deg)',
     transformOrigin: 'center',
-    pointerEvent: 'none'
+    pointerEvent: 'none',
   };
 
   const childContainerStyles = {
     position: 'absolute',
     left: '0px',
     top: '0px',
-    pointerEvent: 'none'
+    pointerEvent: 'none',
   };
 
   return (
     <div ref={containerRef} style={containerStyles}>
-
       <div style={childContainerStyles}>{children}</div>
-
-      <Draggable ref={dragRef} updateHandler={onDragUpdate}/>
+      <Draggable ref={dragRef} updateHandler={onDragUpdate} />
       <Rotatable ref={rotateRef} updateHandler={onRotateUpdate} />
-      
-      
     </div>
   );
 };
 
 export default Behavior;
-

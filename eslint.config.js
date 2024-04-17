@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-const reactPlugin = require( 'eslint-plugin-react');
+const reactPlugin = require('eslint-plugin-react');
 const hooksPlugin = require('eslint-plugin-react-hooks');
 
 module.exports = [
@@ -10,7 +10,7 @@ module.exports = [
     },
     languageOptions: {
       parserOptions: {
-        'ecmaVersion': 2022,
+        ecmaVersion: 2022,
         ecmaFeatures: {
           jsx: true,
         },
@@ -20,28 +20,16 @@ module.exports = [
       react: {
         version: 'detect', // You can add this if you get a warning about the React version when you lint
       },
-    },    
+    },
     rules: {
       ...reactPlugin.configs['jsx-runtime'].rules,
-      'indent': [ 
-        'error',
-        2
-      ],
-      'linebreak-style': [
-        'error',
-        'unix'
-      ],
-      'quotes': [
-        'error',
-        'single'
-      ],
-      'semi': [
-        'error',
-        'always'
-      ],
+      indent: ['error', 2, { SwitchCase: 1 }],
+      'linebreak-style': ['error', 'unix'],
+      quotes: ['error', 'single'],
+      semi: ['error', 'always'],
       'no-unused-vars': 'off',
-      'no-unreachable': 'off'
-     },
+      'no-unreachable': 'off',
+    },
   },
   {
     plugins: {
