@@ -18,7 +18,6 @@ jobs:
         exclude:
           - os: windows-latest
             architecture: arm64
-            target: win
         include:
           - os: macos-latest
             architecture: x64
