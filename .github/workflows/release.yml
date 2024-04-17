@@ -23,15 +23,13 @@ jobs:
             target: win
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Github checkout
+      - name: Github checkout ${{ matrix.os }}
         uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
       - run: npm i
-      - if: runner.os == macos-latest
-        run: npm install -g appdmg
       - name: Publish app
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
