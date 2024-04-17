@@ -4,7 +4,7 @@
   "description": "Player for interactions using the Tangible Engine",
   "main": ".webpack/main",
   "scripts": {
-    "buildbbb": "electron-forge start",
+    "build": "electron-forge start",
     "lint": "eslint src/**/*.js src/**/*.jsx",
     "make": "electron-forge make",
     "package": "electron-forge package",
