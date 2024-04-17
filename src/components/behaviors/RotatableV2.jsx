@@ -1,16 +1,16 @@
 import React, { useState, useRef } from 'react';
 import rotate from './rotate-hit-area.svg';
 
-function Rotatable({children}) {
+function Rotatable({ children }) {
   const [rotation, setRotation] = useState(0); // Initial rotation
   const [isDragging, setIsDragging] = useState(false);
   const ref = useRef(null);
-    
+
   // Function to calculate the angle between two points
   const calculateAngle = (x1, y1, x2, y2) => {
     const dx = x2 - x1;
     const dy = y2 - y1;
-    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+    const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
     return angle;
   };
 
@@ -53,9 +53,8 @@ function Rotatable({children}) {
         userSelect: 'contain', // Prevent text selection
         cursor: 'grab',
         transform: `rotate(${rotation}deg)`, // Apply the rotation
-        transition: 'transform 0.1s' // Smooth transition for rotation
-      }}
-    >
+        transition: 'transform 0.1s', // Smooth transition for rotation
+      }}>
       <img src={rotate} />
       {children}
     </div>

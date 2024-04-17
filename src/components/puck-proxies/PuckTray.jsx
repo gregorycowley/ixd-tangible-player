@@ -25,14 +25,16 @@ const PuckTray = () => {
       {/* <Draggable><Puck color="blue" /></Draggable> */}
       {/* <Rotatable></Rotatable> */}
       {/* <Draggable><Rotatable></Rotatable></Draggable> */}
-      <Behavior id="behavior"><Puck color="blue" /></Behavior>
+      <Behavior id="behavior">
+        <Puck color="blue" />
+      </Behavior>
       {/* <Rotatable><Draggable></Draggable></Rotatable> */}
       {/* <Draggable><Puck color="green" /></Draggable>
       <Draggable><Puck color="orange" /></Draggable>
       <Draggable><Puck color="purple" /></Draggable>
       <Draggable><Puck color="red" /></Draggable>
       <Draggable><Puck color="yellow" /></Draggable> */}
-      <StyledPuckTray  id="puck-tray"  />
+      <StyledPuckTray id="puck-tray" />
     </>
   );
 };
