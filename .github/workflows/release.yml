@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     branches:
-      - main
+      - tea-ceremony-release
   workflow_dispatch:
 
 jobs:
