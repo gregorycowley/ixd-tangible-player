@@ -37,8 +37,8 @@ jobs:
         with:
           python-version: '3.10'
       - run: npm i
-      - if: matrix.os == 'macos-latest'
-        run: npm install -g appdmg
+      #- if: matrix.os == 'macos-latest'
+      #  run: npm install -g appdmg
       - name: Publish app
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
