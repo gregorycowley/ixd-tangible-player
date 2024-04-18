@@ -7,17 +7,15 @@
 //     const element = document.getElementById(selector)
 //     if (element) element.innerText = text
 //   }
-
 //   for (const dependency of ['chrome', 'node', 'electron']) {
 //     replaceText(`${dependency}-version`, process.versions[dependency])
 //   }
 // })
-
-
 const { contextBridge, ipcRenderer } = require('electron/renderer');
 
 contextBridge.exposeInMainWorld('electronAPI', {
   startTangibleEngine: (msg) => ipcRenderer.send('start-tangible-engine', msg),
+  onTangibleEngineUpdate: (callback) => ipcRenderer.on('tangible-engine-update', (_event, value) => callback(value)),
   onUpdateRenderer: (callback) => ipcRenderer.on('update-renderer', (_event, value) => callback(value))
 });
 
