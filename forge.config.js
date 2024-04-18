@@ -1,27 +1,45 @@
 const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
+const path = require('path');
 
 module.exports = {
   packagerConfig: {
     asar: true,
+    icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        bin: 'Electron Starter'
+      }
     },
     {
       name: '@electron-forge/maker-zip',
       platforms: ['darwin'],
     },
     {
+      name: '@electron-forge/maker-dmg',
+      config: {
+        options: {
+          icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
+        },
+      },
+    },
+    {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {
+        options: {
+          icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
+        },
+      }
     },
     {
       name: '@electron-forge/maker-rpm',
-      config: {},
+      config: {
+        icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
+      }
     },
   ],
   plugins: [
@@ -48,7 +66,6 @@ module.exports = {
         },
       },
     },
-
     // Fuses are used to enable/disable various Electron functionality
     // at package time, before code signing the application
     new FusesPlugin({
@@ -61,16 +78,15 @@ module.exports = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
-
   publishers: [
     {
-      name: "@electron-forge/publisher-github",
+      name: '@electron-forge/publisher-github',
       config: {
         repository: {
-          owner: "gregorycowley",
-          owner: "gregorycowley",
-          name: "ixd-tangible-player"
-        }
+          owner: 'gregorycowley',
+          name: 'ixd-tangible-player'
+        },
+        prerelease: true
       }
     }
   ]
