@@ -1,24 +1,10 @@
 import React from 'react';
-// import DataViewer from './components/DataViewer.js';
-// import Button from '@mui/material/Button';
-import Season from './components/tea-ceremony/Season.jsx';
-// import { Puck } from './components/Puck.jsx';
-// import Welcome from './components/Welcome.jsx';
-
-// Example object with various parameters
-const exampleObject = {
-  name: 'John Doe',
-  age: '30',
-  occupation: 'Software Developer',
-  country: 'USA'
-};
+import TeaCeremony from './components/tea-ceremony/TeaCeremony.jsx';
 
 function App() {
   return (
     <>
-      {/* <Button></Button>
-      <DataViewer dataObject={exampleObject} /> */}
-      <Season />
+      <TeaCeremony />
     </>
   );
 }

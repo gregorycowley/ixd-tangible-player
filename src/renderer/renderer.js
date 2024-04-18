@@ -66,6 +66,10 @@ const updateTangiblePos = (tangible, x, y) => {
     tangible.clientHeight / 4}px`;
 };
 
+const update = (...args) => {
+  console.log('update', args);
+};
+
 const updateTangibleRot = (tangible, radian) => {
   tangible.style.transform = `rotate(${radian * 57.29578}deg)`;
 };
@@ -73,12 +77,16 @@ const updateTangibleRot = (tangible, radian) => {
 window.electronAPI.onUpdateRenderer((tangibleData) => {
   // Todo: do something with the data
   console.log('Renderer received from main :: ', tangibleData);
-  parseTangibleData(tangibleData);
+  // parseTangibleData(tangibleData);
   // const oldValue = Number(counter.innerText)
   // const newValue = oldValue + value
   // counter.innerText = newValue.toString()
   // window.electronAPI.counterValue(newValue)
 });
 
-// window.electronAPI.startTangibleEngine('Hello from renderer.js!');
-// console.log('👋 This message is being logged by "renderer.js", included via webpack', tangibleElement);
+window.electronAPI.onTangibleEngineUpdate((tangibleData) => {
+  console.log('onTangibleEngineUpdate received from main :: ', tangibleData);
+  update(tangibleData);
+});
+
+window.electronAPI.startTangibleEngine('Renderer says: startTangibleEngine!');
