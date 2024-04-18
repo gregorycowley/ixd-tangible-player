@@ -4,6 +4,7 @@ import React from 'react';
 import VideoPlayer from './VideoPlayer.jsx';
 import withVideoTimeTracker from './withVideoTimeTracker.jsx';
 
+import VideoIdle from './assets/bgs/Idle_video_1.mov';
 import VideoSpring from './assets/bgs/Spring_video.mov';
 import VideoSummer from './assets/bgs/Summer_video.mov';
 import VideoFall from './assets/bgs/Fall_video.mov';
@@ -20,7 +21,7 @@ const backgroundStyle = {
   backgroundColor: 'blue',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat'
+  backgroundRepeat: 'no-repeat',
 };
 
 const videoStyle = {
@@ -30,32 +31,34 @@ const videoStyle = {
   fontFamily: 'Arial',
   width: '100%',
   height: '100vh',
-  objectFit: 'fill'
+  objectFit: 'fill',
 };
 
-const Background = ({season='spring'}) => {
-
+const Background = ({ season = 'idle' }) => {
   let bgVideo = VideoSpring;
 
   // console.log('Background', season);
 
   switch (season.toUpperCase()) {
-  case 'SPRING':
-    bgVideo = VideoSpring;
-    break;
-  case 'SUMMER':
-    bgVideo = VideoSummer;
-    break;
-  case 'AUTUMN':
-    bgVideo = VideoFall;
-    break;
-  case 'FALL':
-    bgVideo = VideoFall;
-    break;
-  case 'WINTER':
-    bgVideo = VideoWinter;
-    break;
-  default:
+    case 'IDLE':
+      bgVideo = VideoIdle;
+      break;
+    case 'SPRING':
+      bgVideo = VideoSpring;
+      break;
+    case 'SUMMER':
+      bgVideo = VideoSummer;
+      break;
+    case 'AUTUMN':
+      bgVideo = VideoFall;
+      break;
+    case 'FALL':
+      bgVideo = VideoFall;
+      break;
+    case 'WINTER':
+      bgVideo = VideoWinter;
+      break;
+    default:
   }
 
   return (

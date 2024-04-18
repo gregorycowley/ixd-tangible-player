@@ -22,14 +22,14 @@ module.exports = [
       loader: 'babel-loader',
       options: {
         exclude: /node_modules/,
-        presets: ['@babel/preset-react']
-      }
-    }
+        presets: ['@babel/preset-react'],
+      },
+    },
   },
   {
-    test: /\.(png|jpg|gif|svg|glb|gif|mov)$/,
-    type: 'asset/resource'
-  }
+    test: /\.(png|jpg|gif|svg|glb|gif|mov|wav)$/,
+    type: 'asset/resource',
+  },
 
   // Put your webpack loader rules in this array.  This is where you would put
   // your ts-loader configuration for instance:

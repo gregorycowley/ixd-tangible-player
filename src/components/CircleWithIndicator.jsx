@@ -38,8 +38,7 @@ const CircleWithIndicator = () => {
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
-      onWheel={onWheel}
-    >
+      onWheel={onWheel}>
       <div className="indicator"></div>
     </div>
   );
