@@ -3,6 +3,7 @@ import { TEContext } from '../TEContext.js';
 import AmbientAudio from './AmbientAudio.jsx';
 import EventAudio from './EventAudio.jsx';
 import Background from './Background.jsx';
+import ClickAnimation from './ClickAnimation.jsx';
 import SeasonSelect from './SeasonSelect.jsx';
 import eventEmitter from '../EventManager.js';
 
@@ -37,7 +38,9 @@ const TeaCeremony = ({ children }) => {
   return (
     <div>
       <Background season={selectedSeason}></Background>
+      <ClickAnimation season={selectedSeason} />
       <SeasonSelect onSeasonSelect={onSeasonSelect}></SeasonSelect>
+      {/* <Season season={selectedSeason}></Season> */}
       <AmbientAudio season={selectedSeason}></AmbientAudio>
       <EventAudio></EventAudio>
       {children}

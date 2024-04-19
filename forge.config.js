@@ -13,14 +13,9 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-<<<<<<< HEAD
-        bin: 'Electron Starter'
-      }
-=======
         iconUrl: './src/icons/icon.ico',
         setupIcon: './src/icons/icon.ico',
       },
->>>>>>> tea-ceremony-release
     },
     {
       name: '@electron-forge/maker-zip',
@@ -29,39 +24,22 @@ module.exports = {
     {
       name: '@electron-forge/maker-dmg',
       config: {
-<<<<<<< HEAD
-        options: {
-          icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
-        },
-=======
         icon: './src/icons/icon.icns',
->>>>>>> tea-ceremony-release
       },
     },
     {
       name: '@electron-forge/maker-deb',
       config: {
         options: {
-<<<<<<< HEAD
-          icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
-        },
-      }
-=======
           icon: './src/icons/icon.png',
         },
       },
->>>>>>> tea-ceremony-release
     },
     {
       name: '@electron-forge/maker-rpm',
       config: {
-<<<<<<< HEAD
-        icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
-      }
-=======
         icon: './src/icons/icon.png',
       },
->>>>>>> tea-ceremony-release
     },
   ],
   plugins: [
@@ -106,14 +84,6 @@ module.exports = {
       config: {
         repository: {
           owner: 'gregorycowley',
-<<<<<<< HEAD
-          name: 'ixd-tangible-player'
-        },
-        prerelease: true
-      }
-    }
-  ]
-=======
           name: 'ixd-tangible-player',
         },
         prerelease: true,
@@ -133,5 +103,4 @@ module.exports = {
       }
     },
   },
->>>>>>> tea-ceremony-release
 };

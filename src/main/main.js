@@ -36,8 +36,9 @@ const createWindow = () => {
   });
 
   mainWindow.loadURL(webpackEntry);
-
   mainWindow.webContents.openDevTools();
+
+  const te = new TangibleEngineAdapter('localhost', 3000);
 
   const updateRenderer = (tangibleData) => {
     debug('updateRenderer', tangibleData);

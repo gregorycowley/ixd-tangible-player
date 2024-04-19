@@ -43,11 +43,10 @@ module.exports = [
 module.exports = [
   {
     files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
-    plugins: {
-    },
+    plugins: {},
     languageOptions: {
       parserOptions: {
-        'ecmaVersion': 2022,
+        ecmaVersion: 2022,
         ecmaFeatures: {
           jsx: true,
         },
@@ -55,25 +54,13 @@ module.exports = [
     },
     rules: {
       // ... any rules you want
-      'indent': [ 
-        'error',
-        2
-      ],
-      'linebreak-style': [
-        'error',
-        'unix'
-      ],
-      'quotes': [
-        'error',
-        'single'
-      ],
-      'semi': [
-        'error',
-        'always'
-      ],
+      // indent: ['error', 2],
+      'linebreak-style': ['error', 'unix'],
+      quotes: ['error', 'single'],
+      semi: ['error', 'always'],
       'no-unused-vars': 'off',
-      'no-unreachable': 'off'
-     },
+      'no-unreachable': 'off',
+    },
     // ... others are omitted for brevity
-  }
+  },
 ];

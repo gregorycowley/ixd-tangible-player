@@ -6,6 +6,8 @@ import winterGIF from './assets/04_Winter.gif';
 
 function FlowerAnimation({ removeSelf, pos, duration, style, season = 'spring' }) {
   const ref = useRef(null);
+
+  // console.log('FlowerAnimation', pos, duration, style, season);
   switch (season.toUpperCase()) {
     case 'SPRING':
       var gifAnimation = springGIF;
@@ -34,7 +36,7 @@ function FlowerAnimation({ removeSelf, pos, duration, style, season = 'spring' }
     return () => clearTimeout(timer); // Cleanup the timer
   }, [removeSelf, duration]);
 
-  // console.log('FlowerAnimation', pos, season);
+  console.log('FlowerAnimation', pos, season);
 
   return (
     <div ref={ref} id={pos.id} key={pos.id} style={style}>
