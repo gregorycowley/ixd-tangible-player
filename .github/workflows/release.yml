@@ -1,7 +1,11 @@
-# .github/workflows/release.yml
-name: Release app
+name: Build and Release
+
 on:
+  push:
+    branches:
+      - tea-ceremony-release
   workflow_dispatch:
+
 jobs:
   build:
     strategy:
@@ -33,8 +37,8 @@ jobs:
         with:
           python-version: '3.10'
       - run: npm i
-      - if: matrix.os == 'macos-latest'
-        run: npm install -g appdmg
+      #- if: matrix.os == 'macos-latest'
+      #  run: npm install -g appdmg
       - name: Publish app
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -44,3 +48,33 @@ jobs:
         with:
           name: test-artifact-${{ matrix.os }}-${{ matrix.architecture }}
           path: out/make
+  release:
+    # if: ${{github.repository_owner == 'gregorycowley' && github.ref_name == 'main'}}
+    name: Upload Latest Build
+    needs: build
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: 'artifact-*'
+          merge-multiple: true
+      - uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          omitName: true
+          omitBody: true
+          omitBodyDuringUpdate: true
+          prerelease: true
+          tag: 'latest'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: '*.zip'
+      - name: Summary
+        run: |
+          cat <<EOF >> $GITHUB_STEP_SUMMARY
+          # Latest Build Complete!
+
+          For the public download links of these build artifacts, please see:
+          <https://github.com/gregorycowley/ixd-mqtt-to-midi/releases/tag/latest>
+          EOF

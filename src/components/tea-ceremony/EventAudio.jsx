@@ -1,15 +1,22 @@
 import React, { useRef, useState } from 'react';
+import AudioPlayer from './AudioPlayer.jsx';
 
-function AudioPlayer() {
+import eventSrc from './assets/sounds/Effects.wav';
+
+function EventAudio({ season }) {
   // Reference to the audio element
   const audioRef = useRef(null);
-  
-  // State to manage whether the audio should loop
+
   const [loop, setLoop] = useState(false);
+  let src = eventSrc;
 
   // Function to play the audio
-  const playAudio = () => {
+  const play = () => {
     audioRef.current.play();
+  };
+
+  const stop = () => {
+    audioRef.current.pause();
   };
 
   // Function to toggle looping
@@ -19,16 +26,9 @@ function AudioPlayer() {
 
   return (
     <div>
-      <audio ref={audioRef} src="sample-audio.mp3" loop={loop} />
-      <button onClick={playAudio}>Play Audio</button>
-      <div>
-        <label>
-          <input type="checkbox" checked={loop} onChange={toggleLoop} />
-          Loop playback
-        </label>
-      </div>
+      <AudioPlayer ref={audioRef} src={src} />
     </div>
   );
 }
 
-export default AudioPlayer;
+export default EventAudio;

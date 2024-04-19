@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import TeaCeremony from './components/tea-ceremony/TeaCeremony.jsx';
+import Puck from './components/puck-proxies/puck/Puck.jsx';
 
 function App() {
   return (
-    <>
-      <TeaCeremony />
-    </>
+    <StrictMode>
+      <TeaCeremony>{/* <Puck></Puck> */}</TeaCeremony>
+    </StrictMode>
   );
 }
 

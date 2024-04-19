@@ -23,7 +23,7 @@ const VolumeControlDial = ({ audioSrc }) => {
         min={0}
         max={100}
         step={1}
-        style={{ width: "100px", height: "100px" }}
+        style={{ width: '100px', height: '100px' }}
       />
       <audio ref={audioRef} src={audioSrc} controls autoPlay loop>
         Your browser does not support the audio element.

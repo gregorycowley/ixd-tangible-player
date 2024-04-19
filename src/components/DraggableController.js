@@ -9,22 +9,23 @@ const calculateDistance = (x1, y1, x2, y2) => {
 const DraggableItem = ({ id, onDrag }) => {
   const [isDragging, setIsDragging] = useState(false);
 
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    e.preventDefault();
-  };
-
-  const handleMouseMove = (e) => {
-    if (isDragging) {
-      onDrag(id, { x: e.clientX, y: e.clientY });
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
   useEffect(() => {
+    const handleMouseDown = (e) => {
+      setIsDragging(true);
+      e.preventDefault();
+    };
+
+    const handleMouseMove = (e) => {
+      if (isDragging) {
+        onDrag(id, { x: e.clientX, y: e.clientY });
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+  
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
@@ -34,7 +35,7 @@ const DraggableItem = ({ id, onDrag }) => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDragging, onDrag]);
+  }, [isDragging, id, onDrag]);
 
   return <div onMouseDown={handleMouseDown} style={{ width: '50px', height: '50px', position: 'absolute', backgroundColor: 'blue', cursor: 'move' }}></div>;
 };

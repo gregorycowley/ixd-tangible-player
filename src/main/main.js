@@ -6,6 +6,8 @@ const { TangibleEngineAdapter } = require('../tangible-engine/TangibleEngineAdap
 const { debug } = require('../util/debug.js');
 const path = require('node:path');
 const { TEContext } = require('../components/TEContext.js');
+const isDev = require('electron-is-dev');
+const config = require('../config.json');
 
 // MAIN_WINDOW_WEBPACK_ENTRY ::  http://localhost:3000/main_window
 const webpackEntry = MAIN_WINDOW_WEBPACK_ENTRY;
@@ -19,44 +21,37 @@ if (require('electron-squirrel-startup')) {
 }
 
 const createWindow = () => {
+  const screenWidth = config.screenWidth;
+  const screenHeight = config.screenHeight;
+  const makeFullscreen = isDev ? false : true;
+
   const mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 1000,
+    width: screenWidth,
+    height: screenHeight,
+    fullscreen: makeFullscreen,
     webPreferences: {
       nodeIntegration: true,
-      preload: webpackPreloadEntry
-    }
+      preload: webpackPreloadEntry,
+    },
   });
-  
 
   mainWindow.loadURL(webpackEntry);
-  mainWindow.webContents.openDevTools();
-  const te = new TangibleEngineMock(0,0);
-  const teAdapter = new TangibleEngineAdapter(0,0); 
 
-  const onTEConnect = (event, mainWindow) => {
-    debug('onTEConnect start-tangible-engine...', mainWindow);
-    te.on ('status', response => {
-      debug('TE status : ', response);
-      mainWindow.webContents.send('tangible-engine-status', response);
-    });
-    te.on ('update', response => {
-      debug('TE update : ', response);
-      try {
-        const newResponse = teAdapter.mapToObject(response);
-      } catch (e) {
-        debug('Error in createWindow', e);
-      }
-      mainWindow.webContents.send('update-renderer', response);
-    });
-      
-    te.run();
+  mainWindow.webContents.openDevTools();
+
+  const updateRenderer = (tangibleData) => {
+    debug('updateRenderer', tangibleData);
+    try {
+      mainWindow.webContents.send('update-renderer', tangibleData);
+    } catch (e) {
+      console.log('Error at updateRenderer : ', e);
+    }
   };
 
-  try{
+  try {
     // ipcMain.on('start-tangible-engine', onTEConnect, mainWindow );
     onTEConnect('start-tangible-engine', mainWindow);
-  }catch (e) {
+  } catch (e) {
     debug('Error in onTEConnect', e);
   }
 };
@@ -76,4 +71,3 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
-
