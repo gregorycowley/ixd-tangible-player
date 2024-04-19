@@ -5,7 +5,6 @@ const path = require('path');
 module.exports = {
   packagerConfig: {
     asar: true,
-    icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
   },
   rebuildConfig: {},
 

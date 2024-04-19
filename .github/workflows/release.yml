@@ -15,13 +15,11 @@ jobs:
         exclude:
           - os: windows-latest
             architecture: arm64
-        include:
           - os: macos-latest
             architecture: x64
-            target: mac
           - os: macos-latest
             architecture: arm64
-            target: mac-arm
+        include:
           - os: windows-latest
             architecture: x64
             target: win
