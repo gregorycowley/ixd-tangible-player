@@ -1,5 +1,5 @@
 const EventEmitter = require('node:events');
-const puckTestData = require('../../data/te_3_puck.json'); 
+const puckTestData = require('../../data/te_3_puck.json');
 
 const TangibleEngineMock = class TangibleEngineMock extends EventEmitter {
   constructor(port, ip) {
@@ -10,7 +10,7 @@ const TangibleEngineMock = class TangibleEngineMock extends EventEmitter {
     this.emit('status', 'Initialized');
   }
 
-  run () {
+  run() {
     this.puckTestData = puckTestData;
     this.emit('status', 'Connected to service');
     this.interval = setInterval(() => {
@@ -27,11 +27,10 @@ const TangibleEngineMock = class TangibleEngineMock extends EventEmitter {
     this.emit('update', this.puckTestData);
   }
 
-  scaleFunc (x,y) {
+  scaleFunc(x, y) {
     // return screen.dipToScreenPoint({x:x,y:y});
-    return {x:x,y:y};
+    return { x: x, y: y };
   }
 };
-
 
 module.exports.TangibleEngineMock = TangibleEngineMock;

@@ -1,8 +1,8 @@
 // main.js
 // https://www.electronforge.io/config/plugins/webpack
 const { app, BrowserWindow, ipcMain } = require('electron');
-const { TangibleEngineMock } = require('../tangible-engine/TangibleEngineMock');
-const { TangibleEngineAdapter } = require('../tangible-engine/TangibleEngineAdapter');
+// const { TangibleEngineMock } = require('../tangible-engine/TangibleEngineMock');
+const { TangibleEngineAdapter } = require('../tangible-engine/TangibleEngineAdapter.js');
 const { debug } = require('../util/debug.js');
 const path = require('node:path');
 const { TEContext } = require('../components/TEContext.js');
@@ -38,23 +38,34 @@ const createWindow = () => {
   mainWindow.loadURL(webpackEntry);
   mainWindow.webContents.openDevTools();
 
-  const te = new TangibleEngineAdapter('localhost', 3000);
+  // const te = new TangibleEngineAdapter('localhost', 3000);
 
-  const updateRenderer = (tangibleData) => {
-    debug('updateRenderer', tangibleData);
-    try {
-      mainWindow.webContents.send('update-renderer', tangibleData);
-    } catch (e) {
-      console.log('Error at updateRenderer : ', e);
-    }
-  };
+  // const updateRenderer = (tangibleData) => {
+  //   debug('updateRenderer', tangibleData);
+  //   try {
+  //     mainWindow.webContents.send('update-renderer', tangibleData);
+  //   } catch (e) {
+  //     console.log('Error at updateRenderer : ', e);
+  //   }
+  // };
 
-  try {
-    // ipcMain.on('start-tangible-engine', onTEConnect, mainWindow );
-    onTEConnect('start-tangible-engine', mainWindow);
-  } catch (e) {
-    debug('Error in onTEConnect', e);
-  }
+  // ipcMain.on('start-tangible-engine', (event, msg) => {
+  //   debug('ipcMain start-tangible-engine : ', msg);
+  //   try {
+  //     te.on('update', updateRenderer);
+  //     te.run();
+  //   } catch (e) {
+  //     console.log('Error at Main start-tangible-engine : ', e);
+  //   }
+  // });
+
+  // try {
+  //   // ipcMain.on('start-tangible-engine', onTEConnect, mainWindow );
+  //   // onTEConnect('start-tangible-engine', mainWindow);
+  //   te.run;
+  // } catch (e) {
+  //   debug('Error in onTEConnect', e);
+  // }
 };
 
 app.whenReady().then(() => {

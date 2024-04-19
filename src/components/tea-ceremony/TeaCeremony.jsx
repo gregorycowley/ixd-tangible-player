@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { TEContext } from '../TEContext.js';
+import React, { useRef, useEffect, useState } from 'react';
+// import { TEContextAlt } from '../TEContext.js';
 import AmbientAudio from './AmbientAudio.jsx';
-import EventAudio from './EventAudio.jsx';
 import Background from './Background.jsx';
 import ClickAnimation from './ClickAnimation.jsx';
 import SeasonSelect from './SeasonSelect.jsx';
@@ -9,31 +8,34 @@ import eventEmitter from '../EventManager.js';
 
 const TeaCeremony = ({ children }) => {
   const [selectedSeason, setSelectedSeason] = useState('idle');
-  const te = useContext(TEContext);
 
-  useEffect(() => {
-    te.run();
-    return () => {
-      te.stop();
-    };
-  }, [te]);
+  // const te = useContext(TEContextAlt);
 
   const onSeasonSelect = (season) => {
-    te.setSeason(season);
-    console.log('Season selected:', season);
+    // te.setSeason(season);
+    // console.log('Season selected:', season);
+    setSelectedSeason(season);
   };
 
-  useEffect(() => {
-    const handleSelectSeason = (season) => {
-      console.log('Received custom event:', season);
-      setSelectedSeason(season);
-    };
+  // useEffect(() => {
+  //   console.log('Running TeaCeremony', te);
+  //   te.run();
+  //   return () => {
+  //     te.stop();
+  //   };
+  // }, [te]);
 
-    eventEmitter.on('seasonChange', handleSelectSeason);
-    return () => {
-      eventEmitter.removeListener('seasonChange', handleSelectSeason);
-    };
-  }, [selectedSeason]);
+  // useEffect(() => {
+  //   const handleSelectSeason = (season) => {
+  //     console.log('Received custom event:', season);
+  //     setSelectedSeason(season);
+  //   };
+
+  //   eventEmitter.on('seasonChange', handleSelectSeason);
+  //   return () => {
+  //     eventEmitter.removeListener('seasonChange', handleSelectSeason);
+  //   };
+  // }, [selectedSeason, ref]);
 
   return (
     <div>
@@ -41,8 +43,8 @@ const TeaCeremony = ({ children }) => {
       <ClickAnimation season={selectedSeason} />
       <SeasonSelect onSeasonSelect={onSeasonSelect}></SeasonSelect>
       {/* <Season season={selectedSeason}></Season> */}
-      <AmbientAudio season={selectedSeason}></AmbientAudio>
-      <EventAudio></EventAudio>
+      <AmbientAudio ui={false} season={selectedSeason}></AmbientAudio>
+
       {children}
     </div>
   );

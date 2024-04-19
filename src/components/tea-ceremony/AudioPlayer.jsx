@@ -1,6 +1,6 @@
 import React, { useRef, useState, forwardRef } from 'react';
 
-const AudioPlayer = forwardRef(({ src, autoplay }, audioRef) => {
+const AudioPlayer = forwardRef(({ src, autoplay, ui = true }, audioRef) => {
   const [loop, setLoop] = useState(true);
   const [intervalId, setIntervalId] = useState(null);
 
@@ -70,6 +70,18 @@ const AudioPlayer = forwardRef(({ src, autoplay }, audioRef) => {
     setLoop(!loop);
   };
 
+  const uiDiv = `
+    <button onClick={play}>Play Audio</button>
+      <button onClick={stop}>Stop Audio</button>
+      <br />
+      <div>
+        <label>
+          <input type="checkbox" checked={loop} onChange={toggleLoop} />
+          Loop
+        </label>
+      </div>
+  `;
+
   const controlStyle = {
     display: 'inline-flex',
     flexDirection: 'column',
@@ -82,15 +94,7 @@ const AudioPlayer = forwardRef(({ src, autoplay }, audioRef) => {
   return (
     <div style={controlStyle}>
       <audio ref={audioRef} src={src} loop={loop} preload="auto" autoPlay={autoplay} />
-      <button onClick={play}>Play Audio</button>
-      <button onClick={stop}>Stop Audio</button>
-      <br />
-      <div>
-        <label>
-          <input type="checkbox" checked={loop} onChange={toggleLoop} />
-          Loop
-        </label>
-      </div>
+      {ui && uiDiv}
     </div>
   );
 });

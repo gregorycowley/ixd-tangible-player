@@ -1,4 +1,4 @@
-const doDebug = false;
+const doDebug = true;
 
 const debug = (msg, ...args) => {
   if (doDebug) {

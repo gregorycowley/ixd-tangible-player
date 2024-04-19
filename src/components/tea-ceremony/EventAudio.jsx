@@ -3,7 +3,7 @@ import AudioPlayer from './AudioPlayer.jsx';
 
 import eventSrc from './assets/sounds/Effects.wav';
 
-function EventAudio({ season }) {
+function EventAudio({ season, ui = true }) {
   // Reference to the audio element
   const audioRef = useRef(null);
 
@@ -26,7 +26,7 @@ function EventAudio({ season }) {
 
   return (
     <div>
-      <AudioPlayer ref={audioRef} src={src} />
+      <AudioPlayer ui={ui} ref={audioRef} src={src} />
     </div>
   );
 }

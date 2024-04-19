@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import eventEmitter from './EventManager';
 
-class TEContextAltClass extends React.Component {
+class TEContextClass extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -25,6 +25,6 @@ class TEContextAltClass extends React.Component {
   }
 }
 
-const te = new TEContextAltClass();
+const te = new TEContextClass();
 
-export const TEContextAlt = createContext(te);
+export const TEContext = createContext(te);

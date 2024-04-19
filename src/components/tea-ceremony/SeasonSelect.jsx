@@ -1,9 +1,9 @@
 // SeasonSelect component for selecting the season of the tea ceremony
 import React, { useContext } from 'react';
-import { TEContext } from '../TEContext.js';
+// import { TEContext } from '../TEContext.js';
 
 const SeasonSelect = ({ onSeasonSelect }) => {
-  const te = useContext(TEContext);
+  // const te = useContext(TEContext);
   const selectStyle = {
     position: 'absolute',
     pointerEvents: 'none',

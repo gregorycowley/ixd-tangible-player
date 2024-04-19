@@ -1,5 +1,5 @@
 const EventEmitter = require('node:events');
-const TangibleEngineMock = require('./TangibleEngineMock');
+const { TangibleEngineMock } = require('./TangibleEngineMock.js');
 // - Write code that will connect to an external service.
 // - Listen to the service for updates.
 // - Map the service response to a defined data structure.
@@ -11,33 +11,38 @@ const TangibleEngineAdapter = class TangibleEngineAdapter extends EventEmitter {
     this.port = port;
     this.ip = ip;
     this.interval = null;
-    this.te = null;
+    // this.te = null;
+
     this.emit('status', 'Initialized');
   }
 
-  puckIdentity (id, pattern, pointers) {
+  start() {
+    this.te.run();
+  }
+
+  puckIdentity(id, pattern, pointers) {
     const puckId = { Id: id };
     const patternId = { PatternId: pattern };
     const pointerIds = { PointerIds: pointers };
     return [puckId, patternId, pointerIds];
   }
 
-  puckOffset (xOffset, yOffset) {
-    const x = {x: xOffset};
-    const y = {y: yOffset};
-    const offsetArray = [x,y];
+  puckOffset(xOffset, yOffset) {
+    const x = { x: xOffset };
+    const y = { y: yOffset };
+    const offsetArray = [x, y];
     return offsetArray;
   }
 
-  puckName (name) {
+  puckName(name) {
     return { Name: name };
   }
 
-  puckStatus (status) {
+  puckStatus(status) {
     return { Status: status };
   }
 
-  puckRMS ( rms ) {
+  puckRMS(rms) {
     /* 
       RMS (Root Mean Square): Error differential between a recognized 
       tangible and the pattern it corresponds to. Must be smaller than 
@@ -46,41 +51,42 @@ const TangibleEngineAdapter = class TangibleEngineAdapter extends EventEmitter {
     return { RMSNormalized: rms };
   }
 
-  puckPosition (xPos, yPos) {
-    const x = {x: xPos};
-    const y = {y: yPos};
-    const positionArray = [x,y];
+  puckPosition(xPos, yPos) {
+    const x = { x: xPos };
+    const y = { y: yPos };
+    const positionArray = [x, y];
     return positionArray;
   }
 
-  puckRotation ( r ) {
+  puckRotation(r) {
     const rotation = { R: r };
     return rotation;
   }
 
-  run () {
+  run() {
+    console.log('te', typeof this.t);
     this.te = new TangibleEngineMock(this.port, this.ip);
-    this.te.on('update', response => {
-      this.update();
+    this.te.on('update', (response) => {
+      this.update(response);
     });
     this.te.run();
   }
 
-  update() {
+  update(response) {
     this.emit('update', response);
   }
 
-  scaleFunc (x,y) {
-    return {x:x,y:y};
+  scaleFunc(x, y) {
+    return { x: x, y: y };
   }
 
   mapToObject(receivedData) {
     let pucks = [];
-    receivedData.pucks.forEach( puckObj => {
+    receivedData.pucks.forEach((puckObj) => {
       // Loop 1
       const puckPropArray = Object.values(puckObj)[0];
       let newPuck = {};
-      puckPropArray.forEach( puckProp => {
+      puckPropArray.forEach((puckProp) => {
         // Loop 2
         newPuck[Object.keys(puckProp)[0]] = Object.values(puckProp)[0];
       });
@@ -89,7 +95,7 @@ const TangibleEngineAdapter = class TangibleEngineAdapter extends EventEmitter {
     return {
       pucks: pucks,
       length: receivedData.length,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
   }
 };
