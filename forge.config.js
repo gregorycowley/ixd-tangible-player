@@ -8,12 +8,14 @@ module.exports = {
     icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
   },
   rebuildConfig: {},
+
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        bin: 'Electron Starter'
-      }
+        iconUrl: './src/icons/icon.ico',
+        setupIcon: './src/icons/icon.ico',
+      },
     },
     {
       name: '@electron-forge/maker-zip',
@@ -22,24 +24,22 @@ module.exports = {
     {
       name: '@electron-forge/maker-dmg',
       config: {
-        options: {
-          icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
-        },
+        icon: './src/icons/icon.icns',
       },
     },
     {
       name: '@electron-forge/maker-deb',
       config: {
         options: {
-          icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
+          icon: './src/icons/icon.png',
         },
-      }
+      },
     },
     {
       name: '@electron-forge/maker-rpm',
       config: {
-        icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
-      }
+        icon: './src/icons/icon.png',
+      },
     },
   ],
   plugins: [
@@ -84,10 +84,23 @@ module.exports = {
       config: {
         repository: {
           owner: 'gregorycowley',
-          name: 'ixd-tangible-player'
+          name: 'ixd-tangible-player',
         },
-        prerelease: true
+        prerelease: true,
+      },
+    },
+  ],
+  hooks: {
+    packageAfterPrune(config, buildPath) {
+      if (process.platform === 'darwin') {
+        const dirs = glob.sync(path.join(buildPath, 'node_modules/**/node_gyp_bins'), {
+          onlyDirectories: true,
+        });
+
+        for (const directory of dirs) {
+          fs.rmdirSync(directory, { recursive: true, force: true });
+        }
       }
-    }
-  ]
+    },
+  },
 };
