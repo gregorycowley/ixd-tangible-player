@@ -90,17 +90,4 @@ module.exports = {
       },
     },
   ],
-  hooks: {
-    packageAfterPrune(config, buildPath) {
-      if (process.platform === 'darwin') {
-        const dirs = glob.sync(path.join(buildPath, 'node_modules/**/node_gyp_bins'), {
-          onlyDirectories: true,
-        });
-
-        for (const directory of dirs) {
-          fs.rmdirSync(directory, { recursive: true, force: true });
-        }
-      }
-    },
-  },
 };
