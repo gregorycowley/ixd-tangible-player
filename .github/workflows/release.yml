@@ -1,11 +1,7 @@
-name: Build and Release
-
+# .github/workflows/release.yml
+name: Release app
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
-
 jobs:
   build:
     strategy:
@@ -33,48 +29,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-      - run: npm i
-      - if: matrix.os == 'macos-latest'
-        run: npm install -g appdmg
+      - run: npm install
       - name: Publish app
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run publish
-      - name: Upload arifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-artifact-${{ matrix.os }}-${{ matrix.architecture }}
-          path: out/make
-  release:
-    # if: ${{github.repository_owner == 'gregorycowley' && github.ref_name == 'main'}}
-    name: Upload Latest Build
-    needs: build
-    runs-on: macos-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: 'artifact-*'
-          merge-multiple: true
-      - uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          omitName: true
-          omitBody: true
-          omitBodyDuringUpdate: true
-          prerelease: true
-          tag: 'latest'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: '*.zip'
-      - name: Summary
-        run: |
-          cat <<EOF >> $GITHUB_STEP_SUMMARY
-          # Latest Build Complete!
-
-          For the public download links of these build artifacts, please see:
-          <https://github.com/gregorycowley/ixd-mqtt-to-midi/releases/tag/latest>
-          EOF
