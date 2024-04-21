@@ -1,13 +1,11 @@
 // main.js
 // https://www.electronforge.io/config/plugins/webpack
-const { app, BrowserWindow, ipcMain } = require('electron');
-const { TangibleEngineMock } = require('../tangible-engine/TangibleEngineMock');
-const { TangibleEngineAdapter } = require('../tangible-engine/TangibleEngineAdapter');
+const { app, BrowserWindow, ipcMain, session } = require('electron');
 const { debug } = require('../util/debug.js');
 const path = require('node:path');
-const { TEContext } = require('../components/TEContext.js');
 const isDev = require('electron-is-dev');
-const config = require('../config.json');
+const config = require('../config/config.json');
+const TangibleEngine = require('../services/TangibleEngine');
 
 // MAIN_WINDOW_WEBPACK_ENTRY ::  http://localhost:3000/main_window
 const webpackEntry = MAIN_WINDOW_WEBPACK_ENTRY;
@@ -36,24 +34,39 @@ const createWindow = () => {
   });
 
   mainWindow.loadURL(webpackEntry);
-
   mainWindow.webContents.openDevTools();
 
-  const updateRenderer = (tangibleData) => {
-    debug('updateRenderer', tangibleData);
-    try {
-      mainWindow.webContents.send('update-renderer', tangibleData);
-    } catch (e) {
-      console.log('Error at updateRenderer : ', e);
-    }
-  };
-
   try {
-    // ipcMain.on('start-tangible-engine', onTEConnect, mainWindow );
-    onTEConnect('start-tangible-engine', mainWindow);
+    const te = new TangibleEngine('localhost', 3000);
   } catch (e) {
-    debug('Error in onTEConnect', e);
+    debug('Error at TangibleEngine : ', e);
   }
+  // const updateRenderer = (tangibleData) => {
+  //   debug('updateRenderer', tangibleData);
+  //   try {
+  //     mainWindow.webContents.send('update-renderer', tangibleData);
+  //   } catch (e) {
+  //     console.log('Error at updateRenderer : ', e);
+  //   }
+  // };
+
+  // ipcMain.on('start-tangible-engine', (event, msg) => {
+  //   debug('ipcMain start-tangible-engine : ', msg);
+  //   try {
+  //     te.on('update', updateRenderer);
+  //     te.run();
+  //   } catch (e) {
+  //     console.log('Error at Main start-tangible-engine : ', e);
+  //   }
+  // });
+
+  // try {
+  //   // ipcMain.on('start-tangible-engine', onTEConnect, mainWindow );
+  //   // onTEConnect('start-tangible-engine', mainWindow);
+  //   te.run;
+  // } catch (e) {
+  //   debug('Error in onTEConnect', e);
+  // }
 };
 
 app.whenReady().then(() => {
@@ -62,6 +75,10 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
+  });
+  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    details.requestHeaders['User-Agent'] = 'SuperDuperAgent';
+    callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
   debug('Sent from main');
 });

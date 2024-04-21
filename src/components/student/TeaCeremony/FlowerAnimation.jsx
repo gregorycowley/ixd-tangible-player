@@ -3,9 +3,12 @@ import springGIF from './assets/01_Spring.gif';
 import summerGIF from './assets/02_Summer.gif';
 import autumnGIF from './assets/03_Fall.gif';
 import winterGIF from './assets/04_Winter.gif';
+import EventAudio from './EventAudio.jsx';
 
 function FlowerAnimation({ removeSelf, pos, duration, style, season = 'spring' }) {
   const ref = useRef(null);
+
+  // console.log('FlowerAnimation', pos, duration, style, season);
   switch (season.toUpperCase()) {
     case 'SPRING':
       var gifAnimation = springGIF;
@@ -32,13 +35,14 @@ function FlowerAnimation({ removeSelf, pos, duration, style, season = 'spring' }
     }, duration); // Remove after 5 seconds
 
     return () => clearTimeout(timer); // Cleanup the timer
-  }, [removeSelf]);
+  }, [removeSelf, duration]);
 
   // console.log('FlowerAnimation', pos, season);
 
   return (
     <div ref={ref} id={pos.id} key={pos.id} style={style}>
       <img src={gifAnimation} />
+      <EventAudio ui={false}></EventAudio>
     </div>
   );
 }

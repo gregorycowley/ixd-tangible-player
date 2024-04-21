@@ -38,3 +38,34 @@ module.exports = [
     rules: hooksPlugin.configs.recommended.rules,
   },
 ];
+/* eslint-disable indent */
+
+module.exports = [
+  {
+    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
+    plugins: {},
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: 2022,
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+    settings: {
+      react: {
+        version: 'detect', // You can add this if you get a warning about the React version when you lint
+      },
+    },
+    rules: {
+      // ... any rules you want
+      // indent: ['error', 2],
+      'linebreak-style': ['error', 'unix'],
+      quotes: ['error', 'single'],
+      semi: ['error', 'always'],
+      'no-unused-vars': 'off',
+      'no-unreachable': 'off',
+    },
+    // ... others are omitted for brevity
+  },
+];

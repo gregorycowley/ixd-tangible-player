@@ -5,15 +5,12 @@ const path = require('path');
 module.exports = {
   packagerConfig: {
     asar: true,
-    icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
   },
   rebuildConfig: {},
+
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {
-        bin: 'Electron Starter'
-      }
     },
     {
       name: '@electron-forge/maker-zip',
@@ -21,25 +18,12 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-dmg',
-      config: {
-        options: {
-          icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
-        },
-      },
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {
-        options: {
-          icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
-        },
-      }
     },
     {
       name: '@electron-forge/maker-rpm',
-      config: {
-        icon: path.join(process.cwd(), 'main', 'build', 'icon.png'),
-      }
     },
   ],
   plugins: [
@@ -84,10 +68,10 @@ module.exports = {
       config: {
         repository: {
           owner: 'gregorycowley',
-          name: 'ixd-tangible-player'
+          name: 'ixd-tangible-player',
         },
-        prerelease: true
-      }
-    }
-  ]
+        prerelease: true,
+      },
+    },
+  ],
 };

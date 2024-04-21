@@ -6,7 +6,7 @@ import summerSrc from './assets/sounds/Summer_waterdrops.wav';
 import fallSrc from './assets/sounds/fall_leaves.wav';
 import winterSrc from './assets/sounds/Winter_Snow.wav';
 
-function AmbientAudio({ season }) {
+function AmbientAudio({ season, ui = true }) {
   // Reference to the audio element
   const audioRef = useRef(null);
 
@@ -48,7 +48,7 @@ function AmbientAudio({ season }) {
 
   return (
     <div>
-      <AudioPlayer ref={audioRef} src={src} autoplay={true} />
+      <AudioPlayer ui={ui} ref={audioRef} src={src} autoplay={true} />
     </div>
   );
 }

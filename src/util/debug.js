@@ -1,7 +1,7 @@
-const doDebug = false;
+const doDebug = true;
 
 const debug = (msg, ...args) => {
-  if ( doDebug ){
+  if (doDebug) {
     console.log('DEBUG : ', msg, args);
   }
 };

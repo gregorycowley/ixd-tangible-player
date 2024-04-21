@@ -34,7 +34,9 @@ const DivTracker = () => {
     <div>
       <button onClick={captureDivPositionsAndRotations}>Capture Divs Data</button>
       <button onClick={downloadJSON}>Download JSON</button>
-      <a ref={exportRef} style={{ display: 'none' }}>Download</a>
+      <a ref={exportRef} style={{ display: 'none' }}>
+        Download
+      </a>
       {/* Render your divs based on divs array or your application's structure */}
     </div>
   );

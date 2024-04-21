@@ -32,15 +32,11 @@ import '../index.js';
 // This doesn't work because the tangible element cannot be cloned and passed to the main process
 const tangibleElement = document.querySelector('.tangible');
 
-const parseTangibleData = ( response ) => {
+const parseTangibleData = (response) => {
   // callback(response);
   if (response.TANGIBLES.length > 0) {
     showTangible(tangibleElement);
-    updateTangiblePos(
-      tangible,
-      response.TANGIBLES[0].X,
-      response.TANGIBLES[0].Y
-    );
+    updateTangiblePos(tangible, response.TANGIBLES[0].X, response.TANGIBLES[0].Y);
     updateTangibleRot(tangibleElement, response.TANGIBLES[0].R);
   } else {
     hideTangible(tangibleElement);
@@ -56,14 +52,10 @@ const showTangible = (tangible) => {
 };
 
 const updateTangiblePos = (tangible, x, y) => {
-  let newPoint = screen.screenToDipPoint({x:x,y:y});
+  let newPoint = screen.screenToDipPoint({ x: x, y: y });
   const bounds = tangible.getBoundingClientRect();
-  tangible.style.left = `${(newPoint.x - bounds.x) * 0.5 +
-    bounds.x -
-    tangible.clientWidth / 4}px`;
-  tangible.style.top = `${(newPoint.y - bounds.y) * 0.5 +
-    bounds.y -
-    tangible.clientHeight / 4}px`;
+  tangible.style.left = `${(newPoint.x - bounds.x) * 0.5 + bounds.x - tangible.clientWidth / 4}px`;
+  tangible.style.top = `${(newPoint.y - bounds.y) * 0.5 + bounds.y - tangible.clientHeight / 4}px`;
 };
 
 const update = (...args) => {
