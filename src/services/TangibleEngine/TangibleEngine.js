@@ -1,5 +1,5 @@
 const EventEmitter = require('node:events');
-const TEConnect = require('./TEConnect.js');
+const TangibleEngineNode = require('./TangibleEngineNode.js');
 const net = require('node:net');
 const mockNetConnect = require('../../util/mockNetConnect.js');
 // - Write code that will connect to an external service.
