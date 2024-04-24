@@ -13,8 +13,8 @@ class Tangible {
     document.body.appendChild(this.tangible);
   }
 
-  onUpdate = (response) => {
-    console.log('Renderer : ', response);
+  update = (response) => {
+    // console.log('Renderer : ', response);
     if (response.TANGIBLES.length > 0) {
       this.showTangible(tangible);
       this.updateTangiblePos(this.tangible, response.TANGIBLES[0].X, response.TANGIBLES[0].Y);

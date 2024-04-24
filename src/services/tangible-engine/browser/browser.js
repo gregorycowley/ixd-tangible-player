@@ -16,6 +16,7 @@ class TangibleEngineBrowser {
     };
     this._hasWindow = typeof window !== 'undefined';
     if (this._hasWindow) {
+      console.log('----connecting to window----' );
       this._target = window;
     } else {
       throw new TypeError('Window not Available!A target is required to register touch events.');
@@ -106,6 +107,7 @@ class TangibleEngineBrowser {
    * @memberof TangibleEngineBrowser
    */
   init() {
+    console.log('---- initing ----')
     // this.getPatterns();
     this.registerTouchPoints();
     if (this.hasWindow) {
@@ -120,6 +122,7 @@ class TangibleEngineBrowser {
    * @memberof TangibleEngineBrowser
    */
   handleTouch(touchEvent) {
+    // console.log('---- Handling touchs :: ', touchEvent)
     this.touches = touchEvent.touches;
   }
   /**
@@ -130,6 +133,7 @@ class TangibleEngineBrowser {
    */
   registerTouchPoints() {
     if (this.hasWindow) {
+      console.log('----registering touch points----');
       this.target.addEventListener('touchend', this.handleTouch.bind(this));
       this.target.addEventListener('touchmove', this.handleTouch.bind(this));
       this.target.addEventListener('touchstart', this.handleTouch.bind(this));

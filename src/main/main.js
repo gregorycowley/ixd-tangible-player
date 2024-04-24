@@ -2,11 +2,15 @@
 // https://www.electronforge.io/config/plugins/webpack
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { debug } = require('../util/debug.js');
+const TangibleEngineNode = require('../services/tangible-engine/node/node.js')
 // const path = require('node:path');
 const isDev = require('electron-is-dev');
 const config = require('../config.json');
+const net = require('node:net');
+
 
 const {
+  teConnect,
   teWrite,
   teInit,
   teStart,
@@ -42,12 +46,29 @@ const createWindow = () => {
   mainWindow.loadURL(webpackEntry);
   mainWindow.webContents.openDevTools();
 
+
+  const socket = net.connect({ host: '127.0.0.1', port: 4949 });
+  const teNode = new TangibleEngineNode(socket);
+  console.log('^^^^ teNode created ^^^^', teNode)
+  // let teNode = null
+  // teConnect().then(
+  //   (node) => {
+      
+  //     teNode = node;
+  //     teInit(teNode,mainWindow);
+  //     teStart(teNode);
+  //     console.log('^^^^ teNode created ^^^^')
+  //   }
+
+  // );
+  //
+
   // tangible engine
   ipcMain.on('start-tangible-engine', (event, msg) => {
     console.log('ipcMain start-tangible-engine : ', msg);
     try {
-      teInit(mainWindow);
-      teStart();
+      teInit(teNode, mainWindow);
+      teStart(teNode);
     } catch (e) {
       console.log('Error starting TE : ', e);
     }
@@ -58,13 +79,13 @@ const createWindow = () => {
       return arg;
     }
     const result = await doSomeWork('done');
-    teWrite(payload);
+    teWrite(teNode, payload);
     return result;
   });
 
   mainWindow.on('closed', function () {
-    teDestroy();
-    mainWindow = null;
+    teDestroy(teNode);
+    // mainWindow = null;
   });
 };
 

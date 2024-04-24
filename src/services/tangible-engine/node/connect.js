@@ -10,7 +10,7 @@ const connectToServer = async ({host, port}) => {
           resolve(socket);
       });
 
-      addListeners(socket);
+      // addListeners(socket);
 
       socket.on('error', (err) => {
           console.error('Failed to connect to server:', err);
@@ -21,15 +21,15 @@ const connectToServer = async ({host, port}) => {
 
 const addListeners = (socket) => {
   const debug = createDebug();
-  socket.on('data', (data) => {
-    debug.log('onData: Received data from the server: ' + data.toString());
-  });
-  socket.on('end', () => {
-    debug.log('onEnd: Server ended the connection');
-  });
-  socket.on('close', (hadError) => {
-    debug.log('onClose: Connection closed' + (hadError ? ' with error' : ''));
-  });
+  // socket.on('data', (data) => {
+  //   debug.log('onData: Received data from the server: ' + data.toString());
+  // });
+  // socket.on('end', () => {
+  //   debug.log('onEnd: Server ended the connection');
+  // });
+  // socket.on('close', (hadError) => {
+  //   debug.log('onClose: Connection closed' + (hadError ? ' with error' : ''));
+  // });
   socket.on('timeout', () => {
     debug.log('onTimeout: Socket timeout');
     socket.end();

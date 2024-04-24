@@ -83,6 +83,15 @@
 # Renderer
 
 ```
+Writing to client
 
+++++ Writing to client ++++ {
+  POINTERS: [
+    { Id: 0, X: 666, Y: 424 },
+    { Id: 1, X: 520, Y: 198 },
+    { Id: 2, X: 367, Y: 464 }
+  ],
+  Type: 'Update'
+}
 
 ```

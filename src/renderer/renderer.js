@@ -54,7 +54,7 @@ teBrowser.init();
 // });
 
 window.electronAPI.onTangibleEngineUpdate((tangibleData) => {
-  console.log('onTangibleEngineUpdate received from main :: ', tangibleData);
+  // console.log('onTangibleEngineUpdate received from main :: ', tangibleData);
   tangibleEntity.update(tangibleData);
 });
 
