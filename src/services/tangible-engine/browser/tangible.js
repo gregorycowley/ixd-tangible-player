@@ -14,6 +14,8 @@ class Tangible {
   }
 
   update = (response) => {
+    console.log('t: Updating Tangible', response);
+    // ^ NOTE: The only data points neede are X, Y, R
     if (response.TANGIBLES.length > 0) {
       this.showTangible(tangible);
       this.updateTangiblePos(this.tangible, response.TANGIBLES[0].X, response.TANGIBLES[0].Y);
@@ -56,24 +58,6 @@ class Tangible {
     // Start the HTML creation from the root
     const rootElement = createHtmlElement(data);
     return rootElement;
-  }
-
-  createHtmlElement(data) {
-    // Create a <ul> element to list properties or array items
-    const ul = document.createElement('ul');
-    for (const key in data) {
-      const li = document.createElement('li');
-      if (typeof data[key] === 'object' && data[key] !== null) {
-        // Recurse if the item is an object or an array
-        li.innerHTML = `<strong>${key}:</strong>`;
-        li.appendChild(createHtmlElement(data[key]));
-      } else {
-        // Display the value directly if it's not an object or array
-        li.innerHTML = `<strong>${key}:</strong> ${data[key]}`;
-      }
-      ul.appendChild(li);
-    }
-    return ul;
   }
 
   createTangibleGraphicalElement(tangibleId) {

@@ -7,6 +7,8 @@ const TangibleEngineNode = require('../services/tangible-engine/node/node.js');
 const isDev = require('electron-is-dev');
 const config = require('../config.json');
 
+process.env.MODE = 'development';
+
 const {
   teWrite,
   teInit,
