@@ -22,7 +22,7 @@ const os = require('node:os');
 //   }
 // })();
 
-const teConnect = async() => {
+const teConnect = async () => {
   let node = null;
 
   const host = '127.0.0.1';
@@ -36,7 +36,7 @@ const teConnect = async() => {
   try {
     const socket = await connectToServer({ host: host, port: port });
     node = new TangibleEngineNode(socket);
-    
+
     socket.write('Hello from client!');
   } catch (error) {
     console.error('Error:', error);
@@ -47,12 +47,12 @@ const teConnect = async() => {
 const teInit = (teNode, mainWindow) => {
   if (teNode == null) throw new Error('Error: TE Node not initialized');
   teNode.on('patterns', (response) => {
-    console.log ('==== Node Patterns ====')
+    console.log('==== Node Patterns ====');
     mainWindow.webContents.send('tangible-engine-patterns', response);
   });
 
   teNode.on('connect', () => {
-    console.log ('==== Node Connect ====')
+    console.log('==== Node Connect ====');
     mainWindow.webContents.send('tangible-engine-update', 'Connected to service');
   });
   teNode.on('disconnect', () => console.log('Disconnected from service'));
@@ -63,7 +63,7 @@ const teInit = (teNode, mainWindow) => {
   });
 };
 
-const teWrite = (teNode,payload) => {
+const teWrite = (teNode, payload) => {
   if (teNode == null) throw new Error('Error: TE Node not initialized');
   teNode.write(payload);
 };

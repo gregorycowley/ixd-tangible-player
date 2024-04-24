@@ -1,23 +1,23 @@
 const { debug } = require('console');
-const net = require('net')
+const net = require('net');
 
-const connectToServer = async ({host, port}) => {
+const connectToServer = async ({ host, port }) => {
   return new Promise((resolve, reject) => {
-      const socket = new net.Socket();
-      console.log('connectToServer :: ', host, port);
-      socket.connect({host,port}, () => {
-          console.log('Connected to server!');
-          resolve(socket);
-      });
+    const socket = new net.Socket();
+    console.log('connectToServer :: ', host, port);
+    socket.connect({ host, port }, () => {
+      console.log('Connected to server!');
+      resolve(socket);
+    });
 
-      // addListeners(socket);
+    // addListeners(socket);
 
-      socket.on('error', (err) => {
-          console.error('Failed to connect to server:', err);
-          reject(err);
-      });
+    socket.on('error', (err) => {
+      console.error('Failed to connect to server:', err);
+      reject(err);
+    });
   });
-}
+};
 
 const addListeners = (socket) => {
   const debug = createDebug();
@@ -40,7 +40,7 @@ const addListeners = (socket) => {
   socket.on('lookup', (err, address, family, host) => {
     if (err) {
       debug.error('DNS lookup error: ' + err.message);
-        return;
+      return;
     }
     debug.log(`DNS lookup result - Address: ${address}, Family: ${family}, Host: ${host}`);
   });
@@ -48,8 +48,7 @@ const addListeners = (socket) => {
     debug.log('onReady: Socket is ready for communication');
   });
   return socket;
-}
-
+};
 
 const createDebug = () => {
   const debug = {};
@@ -60,7 +59,6 @@ const createDebug = () => {
     console.error('##! ', msg);
   };
   return debug;
-}
-
+};
 
 exports.connectToServer = connectToServer;

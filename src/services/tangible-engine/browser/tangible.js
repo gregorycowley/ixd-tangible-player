@@ -14,7 +14,6 @@ class Tangible {
   }
 
   update = (response) => {
-    // console.log('Renderer : ', response);
     if (response.TANGIBLES.length > 0) {
       this.showTangible(tangible);
       this.updateTangiblePos(this.tangible, response.TANGIBLES[0].X, response.TANGIBLES[0].Y);
@@ -78,15 +77,15 @@ class Tangible {
   }
 
   createTangibleGraphicalElement(tangibleId) {
+    // Graphics are created by React components
+    // This element is for demonstration purposes only
     var newDiv = document.createElement('div');
     newDiv.id = tangibleId;
-    newDiv.innerHTML = 'This is the content of the new div.';
+    newDiv.innerHTML = 'TANGIBLE';
     newDiv.style.color = 'blue';
     newDiv.style.border = '1px solid black';
     newDiv.style.padding = '10px';
     newDiv.style.marginTop = '10px';
-
-    // document.body.appendChild(newDiv);
     return newDiv;
   }
 }

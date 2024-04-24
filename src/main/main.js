@@ -2,15 +2,12 @@
 // https://www.electronforge.io/config/plugins/webpack
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { debug } = require('../util/debug.js');
-const TangibleEngineNode = require('../services/tangible-engine/node/node.js')
-// const path = require('node:path');
+const net = require('node:net');
+const TangibleEngineNode = require('../services/tangible-engine/node/node.js');
 const isDev = require('electron-is-dev');
 const config = require('../config.json');
-const net = require('node:net');
-
 
 const {
-  teConnect,
   teWrite,
   teInit,
   teStart,
@@ -43,25 +40,33 @@ const createWindow = () => {
     },
   });
 
+  if (process.env.MODE == 'development') {
+    mainWindow.webContents.openDevTools();
+  } else {
+    mainWindow.setResizable(false);
+  }
+
   mainWindow.loadURL(webpackEntry);
   mainWindow.webContents.openDevTools();
 
-
-  const socket = net.connect({ host: '127.0.0.1', port: 4949 });
-  const teNode = new TangibleEngineNode(socket);
-  console.log('^^^^ teNode created ^^^^', teNode)
-  // let teNode = null
-  // teConnect().then(
-  //   (node) => {
-      
-  //     teNode = node;
-  //     teInit(teNode,mainWindow);
-  //     teStart(teNode);
-  //     console.log('^^^^ teNode created ^^^^')
-  //   }
-
-  // );
-  //
+  let teNode = null;
+  try {
+    const socket = net.connect({ host: '127.0.0.1', port: 4949 });
+    socket.on('error', (err) => {
+      console.log(
+        'Unable to connect to tangible engine serivce. However, an unconnected socket has been created',
+        err,
+        err.code
+      );
+      if (err.code === 'ECONNREFUSED') {
+        console.log('[Tangible Engine service not running]');
+      }
+    });
+    teNode = new TangibleEngineNode(socket);
+    console.log('^^^^ teNode created ^^^^');
+  } catch (e) {
+    console.log('Error creating TE node : ', e);
+  }
 
   // tangible engine
   ipcMain.on('start-tangible-engine', (event, msg) => {
@@ -85,7 +90,6 @@ const createWindow = () => {
 
   mainWindow.on('closed', function () {
     teDestroy(teNode);
-    // mainWindow = null;
   });
 };
 
