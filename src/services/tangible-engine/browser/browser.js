@@ -10,14 +10,16 @@ class TangibleEngineBrowser {
    * @memberof TangibleEngineBrowser
    */
   constructor() {
+    console.log('Initializing Tangible Engine Browser Client');
     this.scaleFunction = (x, y) => {
       return { x: x, y: y };
     };
     this._hasWindow = typeof window !== 'undefined';
     if (this._hasWindow) {
+      console.log('----connecting to window----');
       this._target = window;
     } else {
-      console.error('Window not Available! A target is required to register touch events.');
+      throw new TypeError('Window not Available!A target is required to register touch events.');
       this._target = null;
     }
   }
@@ -105,6 +107,7 @@ class TangibleEngineBrowser {
    * @memberof TangibleEngineBrowser
    */
   init() {
+    console.log('---- initing ----');
     // this.getPatterns();
     this.registerTouchPoints();
     if (this.hasWindow) {
@@ -119,6 +122,7 @@ class TangibleEngineBrowser {
    * @memberof TangibleEngineBrowser
    */
   handleTouch(touchEvent) {
+    // console.log('---- Handling touchs :: ', touchEvent)
     this.touches = touchEvent.touches;
   }
   /**
@@ -129,6 +133,7 @@ class TangibleEngineBrowser {
    */
   registerTouchPoints() {
     if (this.hasWindow) {
+      console.log('----registering touch points----');
       this.target.addEventListener('touchend', this.handleTouch.bind(this));
       this.target.addEventListener('touchmove', this.handleTouch.bind(this));
       this.target.addEventListener('touchstart', this.handleTouch.bind(this));
@@ -149,7 +154,6 @@ class TangibleEngineBrowser {
     }
   }
 
-
   /**
    * Sends available touch points to the Tangible Engine service for evaluation.
    *
@@ -161,7 +165,7 @@ class TangibleEngineBrowser {
       POINTERS: [],
       Type: 'Update',
     };
-    if (this.touches) {  
+    if (this.touches) {
       if (this.touches.length > 0) {
         for (let i = 0; i < this.touches.length; i++) {
           const touch = this.touches.item(i);
@@ -175,12 +179,13 @@ class TangibleEngineBrowser {
       }
     }
     this.write(payload);
-   
+
     // Connect to the window to listen for events
     window.requestAnimationFrame(this.update.bind(this));
   }
+
   complete() {
-    console.log ('The TEB has done it\'s job')
+    console.log("The TEB has done it's job"); /* eslint-disable-line */
   }
 
   /**
@@ -194,10 +199,9 @@ class TangibleEngineBrowser {
     if (!this.isWriting) {
       this.isWriting = true;
       try {
-        // this.client.write(toBufferPayload(payload), 'utf8', () => (this.isWriting = false));
+        // Send tangible position to the main process
         const result = await window.electronAPI.updateTangibleEngine(payload);
-        if ( result === 'done') this.isWriting = false;
-        // console.log('write result ', result)
+        if (result === 'done') this.isWriting = false;
       } catch (error) {
         console.error(error);
       }
