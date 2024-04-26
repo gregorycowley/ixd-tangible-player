@@ -197,9 +197,12 @@ class TangibleEngineBrowser {
    */
   async write(payload) {
     if (!this.isWriting) {
+      if(payload.POINTERS.length === 0)return;
       this.isWriting = true;
       try {
         // Send tangible position to the main process
+       
+        // console.log("Writing: ", payload)
         const result = await window.electronAPI.updateTangibleEngine(payload);
         if (result === 'done') this.isWriting = false;
       } catch (error) {

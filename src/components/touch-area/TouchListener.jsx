@@ -8,7 +8,7 @@ function TouchListener() {
   const handleTouch = (event) => {
     // Prevent the window from being scrolled
     // event.preventDefault();
-    console.log('event.touches', event.touches);
+    // console.log('event.touches', event.touches);
     // Update state with current touches
     setTouches(
       [...event.touches].map((touch) => ({
@@ -17,7 +17,7 @@ function TouchListener() {
         y: touch.clientY,
       }))
     );
-  };
+  };S
 
   const containerStyle = {
     touchAction: 'none',
