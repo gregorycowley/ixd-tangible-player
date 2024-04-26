@@ -38,7 +38,7 @@ const createWindow = () => {
     width: screenWidth,
     height: screenHeight,
     fullscreen: true,
-    kiosk: true,
+    // kiosk: true,
     frame: false,
     webPreferences: {
       nodeIntegration: true,

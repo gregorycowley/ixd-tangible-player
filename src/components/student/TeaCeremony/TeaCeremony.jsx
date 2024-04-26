@@ -4,7 +4,7 @@ import Background from './Background.jsx';
 import ClickAnimation from './ClickAnimation.jsx';
 import SeasonSelect from './SeasonSelect.jsx';
 import { TEContext } from '../../TEContext.js';
-import TouchListener from '../../TouchListener.jsx';
+import TouchListener from '../../touch-area/TouchListener.jsx';
 
 const TeaCeremony = ({ children }) => {
   const [selectedSeason, setSelectedSeason] = useState('idle');

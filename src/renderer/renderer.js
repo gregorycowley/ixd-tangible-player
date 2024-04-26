@@ -5,15 +5,16 @@ import '../ui/style.css';
 import '../index.js';
 
 const teBrowser = new TangibleEngineBrowser();
-const tangibleEntity = new Tangible();
-const tangibleInfo = new TangibleInfo();
+// const tangibleEntity = new Tangible();
+// const tangibleInfo = new TangibleInfo();
 
 teBrowser.init();
 
-window.electronAPI.onTangibleEngineUpdate((tangibleData) => {
-  console.log('onTangibleEngineUpdate', tangibleData);
-  tangibleInfo.update(tangibleData);
-  tangibleEntity.update(tangibleData);
-});
+// The react App has it's own listener for Tangible Engine updates
+// window.electronAPI.onTangibleEngineUpdate((tangibleData) => {
+//   console.log('onTangibleEngineUpdate', tangibleData);
+//   tangibleInfo.update(tangibleData);
+//   tangibleEntity.update(tangibleData);
+// });
 
 window.electronAPI.startTangibleEngine('Renderer says: startTangibleEngine!');

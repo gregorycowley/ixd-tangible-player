@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import FlowerAnimation from './student/TeaCeremony/FlowerAnimation.jsx';
-import EventAudio from './student/TeaCeremony/EventAudio.jsx';
+import FlowerAnimation from '../student/TeaCeremony/FlowerAnimation.jsx';
+import EventAudio from '../student/TeaCeremony/EventAudio.jsx';
 
 const TouchMarker = () => {
   const [touches, setTouches] = useState([]);
