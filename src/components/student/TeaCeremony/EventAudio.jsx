@@ -26,7 +26,7 @@ function EventAudio({ season, ui = true }) {
 
   return (
     <div>
-      <AudioPlayer ui={ui} ref={audioRef} src={src} />
+      <AudioPlayer ui={ui} ref={audioRef} src={src} autoplay={true} loop={false} />
     </div>
   );
 }

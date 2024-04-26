@@ -6,10 +6,12 @@ const net = require('node:net');
 const TangibleEngineNode = require('../services/tangible-engine/node/node.js');
 const isDev = require('electron-is-dev');
 const config = require('../config.json');
+const os = require('node:os');
 
 process.env.MODE = 'development';
 
 const {
+  sendTestUpdate,
   teWrite,
   teInit,
   teStart,
@@ -52,30 +54,26 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools();
 
   let teNode = null;
+  const port = os.platform == 'darwin' ? 4948 : 4949;
+
   try {
-    const socket = net.connect({ host: '127.0.0.1', port: 4949 });
+    const socket = net.connect({ host: '127.0.0.1', port: port });
     socket.on('error', (err) => {
-      console.log(
-        'Unable to connect to tangible engine serivce. However, an unconnected socket has been created',
-        err,
-        err.code
-      );
       if (err.code === 'ECONNREFUSED') {
         console.log('[Tangible Engine service not running]');
       }
     });
     teNode = new TangibleEngineNode(socket);
-    console.log('^^^^ teNode created ^^^^');
   } catch (e) {
     console.log('Error creating TE node : ', e);
   }
 
   // tangible engine
   ipcMain.on('start-tangible-engine', (event, msg) => {
-    console.log('ipcMain start-tangible-engine : ', msg);
     try {
       teInit(teNode, mainWindow);
       teStart(teNode);
+      sendTestUpdate(mainWindow);
     } catch (e) {
       console.log('Error starting TE : ', e);
     }

@@ -4,19 +4,16 @@ import { TangibleInfo } from '../services/tangible-engine/browser/tangible-info.
 import '../ui/style.css';
 import '../index.js';
 
-import dataReceived from '../../data/received.json';
-
-console.log('r: Renderer Starting..');
-
 const teBrowser = new TangibleEngineBrowser();
 const tangibleEntity = new Tangible();
-teBrowser.init();
-tangibleEntity.update(dataReceived);
 const tangibleInfo = new TangibleInfo();
-tangibleInfo.update(dataReceived);
 
-window.electronAPI.onTangibleEngineUpdate((tangibleData) => {
-  // tangibleEntity.update(tangibleData);
-});
+teBrowser.init();
+
+// window.electronAPI.onTangibleEngineUpdate((tangibleData) => {
+//   console.log('onTangibleEngineUpdate', tangibleData);
+//   tangibleInfo.update(tangibleData);
+//   tangibleEntity.update(tangibleData);
+// });
 
 window.electronAPI.startTangibleEngine('Renderer says: startTangibleEngine!');

@@ -94,3 +94,27 @@ Writing to client
 }
 
 ```
+
+```mermaid
+flowchart TB
+    subgraph electronApp [Electron Application]
+        subgraph mainProcess [Main Process]
+            ipcMain["ipcMain"]
+            serviceClass[Service Class]
+        end
+
+        subgraph rendererProcess [Renderer Process]
+            ipcRenderer["ipcRenderer"]
+            rendererService[Renderer Service]
+        end
+
+        ipcMain -->|Sends/Receives Messages| serviceClass
+        serviceClass -->|Sends/Receives Messages| ipcMain
+
+        ipcRenderer -->|Sends/Receives Messages| rendererService
+        rendererService -->|Sends/Receives Messages| ipcRenderer
+
+        serviceClass -->|Communicates| ipcRenderer
+        ipcMain -->|Communicates| rendererService
+    end
+```

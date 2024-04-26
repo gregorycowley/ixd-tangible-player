@@ -1,0 +1,42 @@
+{
+  "touches": [
+    {
+      "identifier": 0,
+      "target": "canvas",
+      "clientX": 100,
+      "clientY": 150,
+      "screenX": 200,
+      "screenY": 300,
+      "radiusX": 15,
+      "radiusY": 15,
+      "rotationAngle": 0,
+      "force": 0.8
+    },
+    {
+      "identifier": 1,
+      "target": "canvas",
+      "clientX": 300,
+      "clientY": 350,
+      "screenX": 400,
+      "screenY": 450,
+      "radiusX": 15,
+      "radiusY": 15,
+      "rotationAngle": 0,
+      "force": 0.5
+    }
+  ],
+  "length": 2
+}
+
+// clientX:240.81219482421875
+// clientY:143.46517944335938
+// force:1
+// identifier:0
+// pageX:240.81219482421875
+// pageY:143.46517944335938
+// radiusX:11.979166984558105
+// radiusY:11.979166984558105
+// rotationAngle:0
+// screenX:1349.1796875
+// screenY:378.7265625
+// target:li

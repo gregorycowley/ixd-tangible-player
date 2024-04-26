@@ -1,8 +1,10 @@
 import React, { useRef, useState, forwardRef } from 'react';
 
-const AudioPlayer = forwardRef(({ src, autoplay, ui = true }, audioRef) => {
-  const [loop, setLoop] = useState(true);
+const AudioPlayer = forwardRef(({ src, autoplay, ui = true, loop }, audioRef) => {
+  const [loopAudio, setLoopAudio] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
+
+  const doLoop = loopAudio ? 'loop' : '';
 
   const play = () => {
     audioRef.current.play();
@@ -10,20 +12,8 @@ const AudioPlayer = forwardRef(({ src, autoplay, ui = true }, audioRef) => {
 
   const stop = () => {
     audioRef.current.pause();
+    audioRef.current.currentTime = 0;
   };
-
-  // const playAudio = () => {
-  //   if (audioRef.current) {
-  //     audioRef.current.play();
-  //   }
-  // };
-
-  // const stopAudio = () => {
-  //   if (audioRef.current) {
-  //     audioRef.current.pause();
-  //     audioRef.current.currentTime = 0;
-  //   }
-  // };
 
   const fadeInAudio = () => {
     if (audioRef.current) {
@@ -67,7 +57,7 @@ const AudioPlayer = forwardRef(({ src, autoplay, ui = true }, audioRef) => {
 
   // Function to toggle looping
   const toggleLoop = () => {
-    setLoop(!loop);
+    setLoopAudio(!loopAudio);
   };
 
   const uiDiv = `
@@ -76,7 +66,7 @@ const AudioPlayer = forwardRef(({ src, autoplay, ui = true }, audioRef) => {
       <br />
       <div>
         <label>
-          <input type="checkbox" checked={loop} onChange={toggleLoop} />
+          <input type="checkbox" checked={loopAudio} onChange={toggleLoop} />
           Loop
         </label>
       </div>
@@ -91,9 +81,11 @@ const AudioPlayer = forwardRef(({ src, autoplay, ui = true }, audioRef) => {
     margin: '10px 5px',
   };
 
+  console.log('AudioPlayer rerendering...');
+
   return (
     <div style={controlStyle}>
-      <audio ref={audioRef} src={src} loop={loop} preload="auto" autoPlay={autoplay} />
+      <audio ref={audioRef} src={src} preload="auto" autoPlay={autoplay} loop={loopAudio} />
       {ui && uiDiv}
     </div>
   );

@@ -1,0 +1,17 @@
+{
+    "touches": [
+        {
+            "identifier": 12345,
+            "target": "canvas",
+            "clientX": 200,
+            "clientY": 300,
+            "screenX": 400,
+            "screenY": 500,
+            "radiusX": 10,
+            "radiusY": 10,
+            "rotationAngle": 0,
+            "force": 1.0
+        }
+    ],
+    "length": 1
+}

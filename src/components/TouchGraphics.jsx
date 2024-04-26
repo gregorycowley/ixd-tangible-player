@@ -1,29 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 function TouchGraphics() {
   const [touches, setTouches] = useState([]);
 
-  // Update touches for touch start or move
-  const updateTouches = (event) => {
-    event.preventDefault();
-    setTouches(
-      [...event.touches].map((touch) => ({
+  useEffect(() => {
+    const updateTouches = (event) => {
+      const currentTouches = touches;
+      const newTouches = [...event.touches].map((touch) => ({
         id: touch.identifier,
         x: touch.clientX,
         y: touch.clientY,
-      }))
-    );
-  };
+      }));
+      const mergedArray = [...currentTouches, ...newTouches];
+      setTouches(mergedArray);
+    };
 
-  // Remove touch points that have ended
-  const removeTouch = (event) => {
-    event.preventDefault();
-    const activeIds = [...event.touches].map((touch) => touch.identifier);
-    setTouches((current) => current.filter((touch) => activeIds.includes(touch.id)));
-  };
+    // Remove touch points that have ended
+    const removeTouch = (event) => {
+      // ! Not working
+      event.preventDefault();
+      const activeIds = [...event.touches].map((touch) => touch.identifier);
+    };
 
-  // Effect to attach and cleanup event listeners
-  useEffect(() => {
     window.addEventListener('touchstart', updateTouches);
     window.addEventListener('touchmove', updateTouches);
     window.addEventListener('touchend', removeTouch);
@@ -35,13 +33,14 @@ function TouchGraphics() {
       window.removeEventListener('touchend', removeTouch);
       window.removeEventListener('touchcancel', removeTouch);
     };
-  }, []);
+  }, [touches]);
 
   return (
-    <div>
-      {touches.map((touch) => (
+    <div id="touch-graphics">
+      <h1>Touch Graphics</h1>
+      {touches.map((touch, index) => (
         <div
-          key={touch.id}
+          key={index}
           style={{
             position: 'absolute',
             left: `${touch.x}px`,

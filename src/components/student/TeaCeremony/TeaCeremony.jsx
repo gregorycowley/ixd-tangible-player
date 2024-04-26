@@ -1,41 +1,27 @@
-import React, { useRef, useEffect, useState } from 'react';
-// import { TEContextAlt } from '../TEContext.js';
+import React, { useContext, useEffect, useState } from 'react';
 import AmbientAudio from './AmbientAudio.jsx';
 import Background from './Background.jsx';
 import ClickAnimation from './ClickAnimation.jsx';
 import SeasonSelect from './SeasonSelect.jsx';
-import eventEmitter from '../../EventManager.js';
+import { TEContext } from '../../TEContext.js';
+import TouchListener from '../../TouchListener.jsx';
 
 const TeaCeremony = ({ children }) => {
   const [selectedSeason, setSelectedSeason] = useState('idle');
-
-  // const te = useContext(TEContextAlt);
+  const pucks = useContext(TEContext);
 
   const onSeasonSelect = (season) => {
-    // te.setSeason(season);
-    // console.log('Season selected:', season);
     setSelectedSeason(season);
   };
 
-  // useEffect(() => {
-  //   console.log('Running TeaCeremony', te);
-  //   te.run();
-  //   return () => {
-  //     te.stop();
-  //   };
-  // }, [te]);
-
-  // useEffect(() => {
-  //   const handleSelectSeason = (season) => {
-  //     console.log('Received custom event:', season);
-  //     setSelectedSeason(season);
-  //   };
-
-  //   eventEmitter.on('seasonChange', handleSelectSeason);
-  //   return () => {
-  //     eventEmitter.removeListener('seasonChange', handleSelectSeason);
-  //   };
-  // }, [selectedSeason, ref]);
+  useEffect(() => {
+    if (pucks.TANGIBLES !== undefined) {
+      // console.log('-----> pucks', pucks.TANGIBLES[0].PatternId);
+      if (pucks.TANGIBLES[0].PatternId == 3) {
+        setSelectedSeason('spring');
+      }
+    }
+  }, [pucks]);
 
   return (
     <div>
@@ -44,7 +30,7 @@ const TeaCeremony = ({ children }) => {
       <SeasonSelect onSeasonSelect={onSeasonSelect}></SeasonSelect>
       {/* <Season season={selectedSeason}></Season> */}
       <AmbientAudio ui={false} season={selectedSeason}></AmbientAudio>
-
+      <TouchListener />
       {children}
     </div>
   );
