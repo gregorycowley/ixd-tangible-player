@@ -37,7 +37,9 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: screenWidth,
     height: screenHeight,
-    fullscreen: makeFullscreen,
+    fullscreen: true,
+    kiosk: true,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
       preload: webpackPreloadEntry,

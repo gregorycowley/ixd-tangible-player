@@ -10,10 +10,10 @@ const tangibleInfo = new TangibleInfo();
 
 teBrowser.init();
 
-// window.electronAPI.onTangibleEngineUpdate((tangibleData) => {
-//   console.log('onTangibleEngineUpdate', tangibleData);
-//   tangibleInfo.update(tangibleData);
-//   tangibleEntity.update(tangibleData);
-// });
+window.electronAPI.onTangibleEngineUpdate((tangibleData) => {
+  console.log('onTangibleEngineUpdate', tangibleData);
+  tangibleInfo.update(tangibleData);
+  tangibleEntity.update(tangibleData);
+});
 
 window.electronAPI.startTangibleEngine('Renderer says: startTangibleEngine!');

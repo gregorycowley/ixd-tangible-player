@@ -18,7 +18,7 @@ const AppContainer = () => {
   return (
     <TEContext.Provider value={pucks}>
       <div>
-        {true && <TouchMarker />}
+        {false && <TouchMarker />}
         {false && <TouchListener />}
         {false && <TouchGraphics />}
         {false && <Operation />}
