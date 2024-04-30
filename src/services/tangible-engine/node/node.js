@@ -20,16 +20,15 @@ class TangibleEngineNode extends events_1.EventEmitter {
   constructor(socket) {
     super();
 
-    console.log('++++ TangibleEngineNode ++++');
+    // console.log('++++ TangibleEngineNode ++++');
     if (!socket) {
       throw new Error('A socket is required to connect to the Tangible Engine service.');
     }
-    console.log('++++ TangibleEngineNode Again ++++');
     this._client = socket;
 
     this._client.setKeepAlive(true);
     this._client.on('connect', () => {
-      console.log('++++ Connect ++++');
+      console.log('++++ TE Connected ++++');
       this._isConnected = true;
       this.emit('connect');
     });
@@ -190,7 +189,7 @@ class TangibleEngineNode extends events_1.EventEmitter {
    * @memberof TangibleEngineNode
    */
   init() {
-    console.log('++++ init ++++');
+    console.log('++++ TE init ++++');
     this.getPatterns();
   }
   /**

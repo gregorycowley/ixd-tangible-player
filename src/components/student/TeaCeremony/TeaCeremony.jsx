@@ -3,7 +3,7 @@ import AmbientAudio from './AmbientAudio.jsx';
 import Background from './Background.jsx';
 import ClickAnimation from './ClickAnimation.jsx';
 import SeasonSelect from './SeasonSelect.jsx';
-import { TEContext } from '../../TEContext.js';
+import { TEContext } from '../../../contexts/TEContext.js';
 import TouchListener from '../../touch-area/TouchListener.jsx';
 
 const TeaCeremony = ({ children }) => {

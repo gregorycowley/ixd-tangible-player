@@ -1,12 +1,12 @@
 import React, { StrictMode, useState, useEffect } from 'react';
 import AppContainer from './containers/AppContainer.jsx';
-import { TEContext } from './components/TEContext.js';
+import { TEContext } from './contexts/TEContext.js';
 
 function App() {
   const [pucks, setPucks] = useState([{ state: 'initial' }]);
 
   useEffect(() => {
-    console.log("registering listener")
+    console.log('registering listener');
     window.electronAPI.onTangibleEngineUpdate((tangibleData) => {
       // console.log("Puck Data :",tangibleData)
       setPucks(tangibleData);

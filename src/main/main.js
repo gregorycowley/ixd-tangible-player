@@ -1,6 +1,6 @@
 // main.js
 // https://www.electronforge.io/config/plugins/webpack
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, screen } = require('electron');
 const { debug } = require('../util/debug.js');
 const net = require('node:net');
 const TangibleEngineNode = require('../services/tangible-engine/node/node.js');
@@ -41,8 +41,10 @@ const createWindow = () => {
     // kiosk: true,
     frame: false,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
       preload: webpackPreloadEntry,
+      contextIsolation: true,
+      enableRemoteModule: false,
     },
   });
 
@@ -102,11 +104,11 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
-  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
-    details.requestHeaders['User-Agent'] = 'SuperDuperAgent';
-    callback({ cancel: false, requestHeaders: details.requestHeaders });
-  });
-  debug('Sent from main');
+  // session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+  //   details.requestHeaders['User-Agent'] = 'SuperDuperAgent';
+  //   callback({ cancel: false, requestHeaders: details.requestHeaders });
+  // });
+  // debug('Sent from main');
 });
 
 app.on('window-all-closed', () => {
@@ -114,3 +116,11 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+ipcMain.on('get-screen-dimensions', (event) => {
+  // console.log('getScreenDims request received');
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  // console.log('getScreenDims reply :: ', width, height, event);
+  event.reply('screen-dimensions', { width, height });
+});
+// src/main/preload.js

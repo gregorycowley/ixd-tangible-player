@@ -16,7 +16,7 @@ class TangibleEngineBrowser {
     };
     this._hasWindow = typeof window !== 'undefined';
     if (this._hasWindow) {
-      console.log('----connecting to window----');
+      // console.log('----connecting to window----');
       this._target = window;
     } else {
       throw new TypeError('Window not Available!A target is required to register touch events.');
@@ -107,7 +107,7 @@ class TangibleEngineBrowser {
    * @memberof TangibleEngineBrowser
    */
   init() {
-    console.log('---- initing ----');
+    // console.log('---- initing ----');
     // this.getPatterns();
     this.registerTouchPoints();
     if (this.hasWindow) {
@@ -197,11 +197,11 @@ class TangibleEngineBrowser {
    */
   async write(payload) {
     if (!this.isWriting) {
-      if(payload.POINTERS.length === 0)return;
+      if (payload.POINTERS.length === 0) return;
       this.isWriting = true;
       try {
         // Send tangible position to the main process
-       
+
         // console.log("Writing: ", payload)
         const result = await window.electronAPI.updateTangibleEngine(payload);
         if (result === 'done') this.isWriting = false;

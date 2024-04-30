@@ -3,53 +3,11 @@ const TangibleEngineNode = require('./node.js');
 const puckData = require('../../../../data/received.json');
 const os = require('node:os');
 
-// let teNode = null;
-
-// (async () => {
-//   const host = '127.0.0.1';
-//   let port = 4949;
-//   if (os.platform() === 'win32') {
-//     port = 4949;
-//   } else if (os.platform() === 'darwin') {
-//     port = 4948;
-//   }
-
-//   try {
-//     const socket = await connectToServer({ host: host, port: port });
-//     teNode = new TangibleEngineNode(socket);
-//     socket.write('Hello from client!');
-//   } catch (error) {
-//     console.error('Error:', error);
-//   }
-// })();
-
 const sendTestUpdate = (mainWindow) => {
   setTimeout(() => {
     mainWindow.webContents.send('tangible-engine-update', puckData);
   }, 2000);
 };
-
-// const teConnect = async () => {
-//   let node = null;
-
-//   const host = '127.0.0.1';
-//   let port = 4949;
-//   if (os.platform() === 'win32') {
-//     port = 4949;
-//   } else if (os.platform() === 'darwin') {
-//     port = 4948;
-//   }
-
-//   try {
-//     const socket = await connectToServer({ host: host, port: port });
-//     node = new TangibleEngineNode(socket);
-
-//     socket.write('Hello from client!');
-//   } catch (error) {
-//     console.error('Error:', error);
-//   }
-//   return node;
-// };
 
 const teInit = (teNode, mainWindow) => {
   if (teNode == null) throw new Error('Error: TE Node not initialized');
@@ -92,3 +50,45 @@ module.exports.teInit = teInit;
 module.exports.teStart = teStart;
 module.exports.teDestroy = teDestroy;
 module.exports.teWrite = teWrite;
+
+// let teNode = null;
+
+// (async () => {
+//   const host = '127.0.0.1';
+//   let port = 4949;
+//   if (os.platform() === 'win32') {
+//     port = 4949;
+//   } else if (os.platform() === 'darwin') {
+//     port = 4948;
+//   }
+
+//   try {
+//     const socket = await connectToServer({ host: host, port: port });
+//     teNode = new TangibleEngineNode(socket);
+//     socket.write('Hello from client!');
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// })();
+
+// const teConnect = async () => {
+//   let node = null;
+
+//   const host = '127.0.0.1';
+//   let port = 4949;
+//   if (os.platform() === 'win32') {
+//     port = 4949;
+//   } else if (os.platform() === 'darwin') {
+//     port = 4948;
+//   }
+
+//   try {
+//     const socket = await connectToServer({ host: host, port: port });
+//     node = new TangibleEngineNode(socket);
+
+//     socket.write('Hello from client!');
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+//   return node;
+// };

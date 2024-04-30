@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { TEContext } from '../TEContext.js';
+import { TEContext } from '../../contexts/TEContext.js';
 import TouchListener from './TouchListener.jsx';
-
 
 const touchList = [];
 
@@ -10,14 +9,12 @@ const touchList = [];
 
 const TouchArea = () => {
   const tangibles = useContext(TEContext);
-  const [ tangibleList, setTangibleList ] = useState([]);
-
+  const [tangibleList, setTangibleList] = useState([]);
 
   useEffect(() => {
-
-    if (tangibles.TANGIBLES && tangibles.TANGIBLES.length > 0){
+    if (tangibles.TANGIBLES && tangibles.TANGIBLES.length > 0) {
       // console.log('Touch Area Received', tangibles.TANGIBLES);
-      tangibles.TANGIBLES.map( (i) => console.log(i))
+      tangibles.TANGIBLES.map((i) => console.log(i));
 
       // tangibles.TANGIBLES.map((tangible) => {
       //   const id = tangible.Id;
@@ -36,7 +33,7 @@ const TouchArea = () => {
       //   // console.log(tangibleList);
       // })
     }
-  }, [tangibles,tangibleList]);
+  }, [tangibles, tangibleList]);
   return (
     <>
       <TouchListener />
