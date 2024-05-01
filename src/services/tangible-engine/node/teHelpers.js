@@ -1,6 +1,7 @@
 const { connectToServer } = require('./connect.js');
 const TangibleEngineNode = require('./node.js');
 const puckData = require('../../../../data/received.json');
+const {appendObjectToNewLine} = require('../../../util/logToFile.js');
 const os = require('node:os');
 
 const sendTestUpdate = (mainWindow) => {

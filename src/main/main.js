@@ -9,7 +9,7 @@ const isDev = require('electron-is-dev');
 const config = require('../config.json');
 const os = require('node:os');
 const icon = require('./build/logo.png');
-const { appendObjectToNewLine } = require('../util/appendObjectToNewLine.js');
+const { appendObjectToNewLine } = require('../util/logToFile.js');
 
 process.env.MODE = 'development';
 

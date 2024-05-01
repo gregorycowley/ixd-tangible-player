@@ -26,4 +26,4 @@ function appendObjectToNewLine(obj, filename) {
   });
 }
 
-module.exports = appendObjectToNewLine;
+module.exports.appendObjectToNewLine = appendObjectToNewLine;
