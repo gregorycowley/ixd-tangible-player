@@ -45,7 +45,7 @@ class TangibleEngineNode extends events_1.EventEmitter {
       //   }
       // });
 
-      // console.log('Client Data ', response)
+      // console.log('Client Data ', response);
       this.emit(PAYLOAD_TYPES[response.TYPE], response);
       // hydrate patterns
       if (response.TYPE === 2) {

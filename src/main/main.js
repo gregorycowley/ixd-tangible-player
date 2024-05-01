@@ -1,5 +1,6 @@
 // main.js
 // https://www.electronforge.io/config/plugins/webpack
+
 const { app, BrowserWindow, ipcMain, screen } = require('electron');
 const { debug } = require('../util/debug.js');
 const net = require('node:net');
@@ -7,6 +8,8 @@ const TangibleEngineNode = require('../services/tangible-engine/node/node.js');
 const isDev = require('electron-is-dev');
 const config = require('../config.json');
 const os = require('node:os');
+const icon = require('./build/logo.png');
+const { appendObjectToNewLine } = require('../util/appendObjectToNewLine.js');
 
 process.env.MODE = 'development';
 
@@ -40,22 +43,23 @@ const createWindow = () => {
     fullscreen: true,
     // kiosk: true,
     frame: false,
+    title: 'Tangible Player',
+    icon: icon,
     webPreferences: {
-      nodeIntegration: false,
+      nodeIntegration: true,
       preload: webpackPreloadEntry,
       contextIsolation: true,
       enableRemoteModule: false,
     },
   });
-
-  if (process.env.MODE == 'development') {
+  const isDev = process.env.MODE == 'development';
+  if (isDev) {
     mainWindow.webContents.openDevTools();
   } else {
     mainWindow.setResizable(false);
   }
 
   mainWindow.loadURL(webpackEntry);
-  mainWindow.webContents.openDevTools();
 
   let teNode = null;
   const port = os.platform == 'darwin' ? 4948 : 4949;
@@ -84,6 +88,9 @@ const createWindow = () => {
   });
 
   ipcMain.handle('update-tangible-engine', async (event, payload) => {
+    console.log(`:::: ${JSON.stringify(payload) || 'no payload'} ::::`);
+
+    appendObjectToNewLine(payload, 'send.txt');
     function doSomeWork(arg) {
       return arg;
     }
@@ -104,11 +111,6 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
-  // session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
-  //   details.requestHeaders['User-Agent'] = 'SuperDuperAgent';
-  //   callback({ cancel: false, requestHeaders: details.requestHeaders });
-  // });
-  // debug('Sent from main');
 });
 
 app.on('window-all-closed', () => {

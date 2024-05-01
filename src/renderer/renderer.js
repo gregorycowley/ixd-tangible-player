@@ -1,8 +1,20 @@
 import { TangibleEngineBrowser } from '../services/tangible-engine/browser/browser.js';
 import { Tangible } from '../services/tangible-engine/browser/tangible.js';
 import { TangibleInfo } from '../services/tangible-engine/browser/tangible-info.js';
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import '../ui/style.css';
-import '../index.js';
+import App from '../App.jsx';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+window.root = root;
 
 const teBrowser = new TangibleEngineBrowser();
 teBrowser.init();
@@ -10,7 +22,7 @@ teBrowser.init();
 const init = () => {
   const enableScaleFunction = true;
   const enableTangibleEngine = true;
-  const listenForUpdates = false;
+  const listenForUpdates = true;
 
   if (enableScaleFunction) {
     window.electronAPI.getScreenDims();
@@ -22,10 +34,12 @@ const init = () => {
         const yRatio = dims.height / window.innerHeight;
         const newX = x * xRatio;
         const newY = y * yRatio;
-        // console.log('Scale Function: ', x, y, '=>', newX, newY, 'Ratios:', xRatio, yRatio);
-        return { newX, newY };
+
+        // console.log('Scale Function: ', dims, window.innerWidth, window.innerHeight);
+        return { x: newX, y: newY };
       };
       teBrowser.scaleFunc = scaleFunction;
+      console.log(`**** Screen dims: ${dims.width} x ${dims.height} ****`);
     });
   }
 
@@ -35,14 +49,15 @@ const init = () => {
 
   if (listenForUpdates) {
     // ^ Note: The React App has it's own listener for Tangible Engine updates
-    this.tangibleInfo = new TangibleInfo();
-    this.tangibleEntity = new Tangible();
+    // this.tangibleInfo = new TangibleInfo();
+    // this.tangibleEntity = new Tangible();
     window.electronAPI.onTangibleEngineUpdate((tangibleData) => {
-      console.log('onTangibleEngineUpdate', tangibleData);
-      tangibleInfo.update(tangibleData);
-      tangibleEntity.update(tangibleData);
+      console.log('**** onTangibleEngineUpdate Callback ****', tangibleData);
+      // tangibleInfo.update(tangibleData);
+      // tangibleEntity.update(tangibleData);
     });
   }
+  console.log('**** Renderer Init Complete ****');
 };
 
 init();

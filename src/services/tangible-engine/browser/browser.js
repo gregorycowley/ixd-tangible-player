@@ -10,7 +10,6 @@ class TangibleEngineBrowser {
    * @memberof TangibleEngineBrowser
    */
   constructor() {
-    console.log('Initializing Tangible Engine Browser Client');
     this.scaleFunction = (x, y) => {
       return { x: x, y: y };
     };
@@ -19,9 +18,10 @@ class TangibleEngineBrowser {
       // console.log('----connecting to window----');
       this._target = window;
     } else {
-      throw new TypeError('Window not Available!A target is required to register touch events.');
+      throw new TypeError('Window not Available! A target is required to register touch events.');
       this._target = null;
     }
+    console.log('---- Initializing Tangible Engine Browser Client ----');
   }
 
   /**
@@ -52,6 +52,7 @@ class TangibleEngineBrowser {
    * @memberof TangibleEngineBrowser
    */
   set scaleFunc(value) {
+    console.log('---- Setting scale function ----');
     this.scaleFunction = value;
   }
   /**
@@ -107,11 +108,12 @@ class TangibleEngineBrowser {
    * @memberof TangibleEngineBrowser
    */
   init() {
-    // console.log('---- initing ----');
+    console.log('---- TE browser initing ----');
     // this.getPatterns();
     this.registerTouchPoints();
     if (this.hasWindow) {
       window.requestAnimationFrame(this.update.bind(this));
+      console.log('---- Binding update to window ----');
     }
   }
   /**
@@ -133,7 +135,7 @@ class TangibleEngineBrowser {
    */
   registerTouchPoints() {
     if (this.hasWindow) {
-      console.log('----registering touch points----');
+      console.log('---- registering touch points ----');
       this.target.addEventListener('touchend', this.handleTouch.bind(this));
       this.target.addEventListener('touchmove', this.handleTouch.bind(this));
       this.target.addEventListener('touchstart', this.handleTouch.bind(this));
@@ -170,6 +172,7 @@ class TangibleEngineBrowser {
         for (let i = 0; i < this.touches.length; i++) {
           const touch = this.touches.item(i);
           const scaledPoints = this.scaleFunction(touch.clientX, touch.clientY);
+          // console.log('---- Scaled Points ----', scaledPoints);
           payload.POINTERS.push({
             Id: touch.identifier,
             X: scaledPoints.x,
@@ -200,9 +203,6 @@ class TangibleEngineBrowser {
       if (payload.POINTERS.length === 0) return;
       this.isWriting = true;
       try {
-        // Send tangible position to the main process
-
-        // console.log("Writing: ", payload)
         const result = await window.electronAPI.updateTangibleEngine(payload);
         if (result === 'done') this.isWriting = false;
       } catch (error) {

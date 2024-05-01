@@ -6,6 +6,7 @@ const os = require('node:os');
 const sendTestUpdate = (mainWindow) => {
   setTimeout(() => {
     mainWindow.webContents.send('tangible-engine-update', puckData);
+    console.log('==== TE Node Sending Test to Renderer ====');
   }, 2000);
 };
 
@@ -23,9 +24,11 @@ const teInit = (teNode, mainWindow) => {
   teNode.on('disconnect', () => console.log('Disconnected from service'));
 
   teNode.on('update', (response) => {
-    // console.log ('==== Node Update ====')
+    console.log('==== Node Update ====');
+    appendObjectToNewLine(payload, 'receive.txt');
     mainWindow.webContents.send('tangible-engine-update', response);
   });
+  console.log('==== TE Node Init Complete ====');
 };
 
 const teWrite = (teNode, payload) => {
@@ -42,6 +45,7 @@ const teDestroy = (teNode) => {
 const teStart = (teNode) => {
   if (teNode == null) throw new Error('Error: TE Node not initialized');
   teNode.init();
+  console.log('==== TE Node Started ====');
 };
 
 // module.exports.teConnect = teConnect;
