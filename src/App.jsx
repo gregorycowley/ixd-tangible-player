@@ -6,9 +6,9 @@ function App() {
   const [pucks, setPucks] = useState([{ state: 'initial' }]);
 
   useEffect(() => {
-    console.log('registering listener');
+    // console.log('registering listener');
     const callback = (tangibleData) => {
-      console.log('Puck Data :', tangibleData);
+      // console.log('Puck Data :', tangibleData);
       setPucks(tangibleData);
     };
     window.electronAPI.onTangibleEngineUpdate(callback);
