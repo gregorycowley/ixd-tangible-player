@@ -17,6 +17,11 @@ root.render(
 window.root = root;
 
 const teBrowser = new TangibleEngineBrowser();
+teBrowser.requestFunc = async (payload) => {
+  // Designed to consolidate all requests to the Tangible Engine service
+  const response = await window.electronAPI.sendRequestToTE(payload);
+  return response;
+};
 teBrowser.init();
 
 const init = () => {
@@ -30,8 +35,8 @@ const init = () => {
       document.getElementById('output').textContent = `${dims.width} x ${dims.height}`;
       // console.log('From Server: ', dims);
       const scaleFunction = (x, y) => {
-        const xRatio = dims.width / window.innerWidth;
-        const yRatio = dims.height / window.innerHeight;
+        const xRatio = window.innerWidth / dims.width;
+        const yRatio = window.innerHeight / dims.height;
         const newX = x * xRatio;
         const newY = y * yRatio;
 
@@ -51,8 +56,8 @@ const init = () => {
     // ^ Note: The React App has it's own listener for Tangible Engine updates
     // this.tangibleInfo = new TangibleInfo();
     // this.tangibleEntity = new Tangible();
-    window.electronAPI.onTangibleEngineUpdate((tangibleData) => {
-      // console.log('**** onTangibleEngineUpdate Callback ****', tangibleData);
+    window.electronAPI.receiveReponseFromTE((tangibleData) => {
+      // console.log('**** receiveReponseFromTE Callback ****', tangibleData);
       // tangibleInfo.update(tangibleData);
       // tangibleEntity.update(tangibleData);
     });

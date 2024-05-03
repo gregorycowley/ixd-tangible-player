@@ -1,33 +1,34 @@
 const { connectToServer } = require('./connect.js');
 const TangibleEngineNode = require('./node.js');
 const puckData = require('../../../../data/received.json');
-const {appendObjectToNewLine} = require('../../../util/logToFile.js');
+const { appendObjectToNewLine } = require('../../../util/logToFile.js');
 const os = require('node:os');
 
 const sendTestUpdate = (mainWindow) => {
   setTimeout(() => {
-    mainWindow.webContents.send('tangible-engine-update', puckData);
+    mainWindow.webContents.send('tangible-engine-response', puckData);
     console.log('==== TE Node Sending Test to Renderer ====');
   }, 2000);
 };
 
 const teInit = (teNode, mainWindow) => {
   if (teNode == null) throw new Error('Error: TE Node not initialized');
+
+  teNode.on('connect', () => {
+    console.log('==== Node Connect ====');
+    mainWindow.webContents.send('tangible-engine-response', 'Connected to service');
+  });
+  teNode.on('disconnect', () => console.log('Disconnected from service'));
+
   teNode.on('patterns', (response) => {
     // console.log('==== Node Patterns ====');
     mainWindow.webContents.send('tangible-engine-patterns', response);
   });
 
-  teNode.on('connect', () => {
-    console.log('==== Node Connect ====');
-    mainWindow.webContents.send('tangible-engine-update', 'Connected to service');
-  });
-  teNode.on('disconnect', () => console.log('Disconnected from service'));
-
   teNode.on('update', (response) => {
     // console.log('==== Node Update ====');
     // appendObjectToNewLine(response, 'receive.txt');
-    mainWindow.webContents.send('tangible-engine-update', response);
+    mainWindow.webContents.send('tangible-engine-response', response);
   });
   console.log('==== TE Node Init Complete ====');
 };

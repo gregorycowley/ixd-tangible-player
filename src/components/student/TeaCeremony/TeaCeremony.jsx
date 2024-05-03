@@ -8,20 +8,20 @@ import TouchListener from '../../touch-area/TouchListener.jsx';
 
 const TeaCeremony = ({ children }) => {
   const [selectedSeason, setSelectedSeason] = useState('idle');
-  const pucks = useContext(TEContext);
+  const { tangibles, pointers, status } = useContext(TEContext);
 
   const onSeasonSelect = (season) => {
     setSelectedSeason(season);
   };
 
   useEffect(() => {
-    if (pucks.TANGIBLES !== undefined) {
-      // console.log('-----> pucks', pucks.TANGIBLES[0].PatternId);
-      if (pucks.TANGIBLES[0].PatternId == 3) {
+    if (tangibles !== undefined) {
+      // console.log('-----> tangibles', tangibles[0].PatternId);
+      if (tangibles[0].PatternId == 3) {
         setSelectedSeason('spring');
       }
     }
-  }, [pucks]);
+  }, [tangibles]);
 
   return (
     <div>

@@ -13,6 +13,10 @@ class TangibleEngineBrowser {
     this.scaleFunction = (x, y) => {
       return { x: x, y: y };
     };
+    this.requestFunction = (payload) => {
+      const reponse = 'done';
+      return reponse;
+    };
     this._hasWindow = typeof window !== 'undefined';
     if (this._hasWindow) {
       // console.log('----connecting to window----');
@@ -54,6 +58,16 @@ class TangibleEngineBrowser {
   set scaleFunc(value) {
     console.log('---- Setting scale function ----');
     this.scaleFunction = value;
+  }
+  /**
+   * Function for sending requests to the Tangible Engine service.
+   *
+   * @public
+   * @memberof TangibleEngineBrowser
+   */
+  set requestFunc(value) {
+    console.log('---- Setting scale function ----');
+    this.requestFunction = value;
   }
   /**
    * A list of patterns registered with the Tangible Engine service. Patterns
@@ -187,10 +201,6 @@ class TangibleEngineBrowser {
     window.requestAnimationFrame(this.update.bind(this));
   }
 
-  complete() {
-    console.log("The TEB has done it's job"); /* eslint-disable-line */
-  }
-
   /**
    * Sends a formatted message to the Tangible Engine service via TCP.
    *
@@ -203,7 +213,7 @@ class TangibleEngineBrowser {
       if (payload.POINTERS.length === 0) return;
       this.isWriting = true;
       try {
-        const result = await window.electronAPI.updateTangibleEngine(payload);
+        const result = await this.requestFunction(payload);
         if (result === 'done') this.isWriting = false;
       } catch (error) {
         console.error(error);

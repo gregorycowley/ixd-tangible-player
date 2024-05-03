@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import VisualCircles from './VisualCircles.jsx';
-import points from '../../../data/send_multiple.json';
+import { TEContext } from '../../contexts/TEContext.js';
 
 const VisualizeTouches = () => {
-  // const svgCircles = touches.map((touch, index) => (
-  //   <VisualCircles key={index} points={touch.points} />
-  // ));
+  const { pointers } = useContext(TEContext);
+  console.log('VisualizeTouches', pointers);
+
   const style = {
     boxSizing: 'border-box',
     position: 'absolute',
@@ -15,7 +15,7 @@ const VisualizeTouches = () => {
     zIndex: '1',
   };
 
-  return <VisualCircles style={style} points={points.POINTERS} />;
+  return <VisualCircles style={style} points={pointers || []} />;
 };
 
 export default VisualizeTouches;

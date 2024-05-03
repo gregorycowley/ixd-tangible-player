@@ -18,14 +18,14 @@ function createWindow() {
   });
 
   teNode.on('connect', () => {
-    mainWindow.webContents.send('tangible-engine-update', 'Connected to service');
+    mainWindow.webContents.send('tangible-engine-response', 'Connected to service');
   });
 
   teNode.on('disconnect', () => console.log('Disconnected from service'));
 
   teNode.on('update', (response) => {
     // Todo: !Important. The teNode instance needs to be destroyed when the browser is closed.
-    mainWindow.webContents.send('tangible-engine-update', response);
+    mainWindow.webContents.send('tangible-engine-response', response);
   });
 
   ipcMain.on('start-tangible-engine', (event, msg) => {
@@ -37,7 +37,7 @@ function createWindow() {
     }
   });
 
-  ipcMain.handle('update-tangible-engine', async (event, payload) => {
+  ipcMain.handle('tangible-engine-request', async (event, payload) => {
     function doSomeWork(arg) {
       return arg;
     }
@@ -64,10 +64,10 @@ function createWindow() {
 ```javascript
   contextBridge.exposeInMainWorld('electronAPI', {
     startTangibleEngine: (msg) => ipcRenderer.send('start-tangible-engine', msg),
-    onTangibleEngineUpdate: (callback) => ipcRenderer.on('tangible-engine-update', (_event, value) => callback(value)),
+    receiveReponseFromTE: (callback) => ipcRenderer.on('tangible-engine-response', (_event, value) => callback(value)),
     onTangibleEnginePatterns: (callback) => ipcRenderer.on('tangible-engine-patterns', (_event, value) => callback(value)),
-    updateTangibleEngine: (payload) => ipcRenderer.invoke('update-tangible-engine', payload),
-    onReply: () => ipcRenderer.on('update-tangible-engine-reply', (_event, arg) => {
+    sendRequestToTE: (payload) => ipcRenderer.invoke('tangible-engine-request', payload),
+    onReply: () => ipcRenderer.on('tangible-engine-request-reply', (_event, arg) => {
       console.log('REPLY!!', arg)
     })
   });`

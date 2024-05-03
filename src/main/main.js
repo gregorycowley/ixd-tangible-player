@@ -87,9 +87,9 @@ const createWindow = () => {
     }
   });
 
-  ipcMain.handle('update-tangible-engine', async (event, payload) => {
+  ipcMain.handle('tangible-engine-request', async (event, payload) => {
     console.log(`:::: ${JSON.stringify(payload) || 'no payload'} ::::`);
-
+    mainWindow.webContents.send('tangible-engine-response', payload);
     appendObjectToNewLine(payload, 'send.txt');
     function doSomeWork(arg) {
       return arg;

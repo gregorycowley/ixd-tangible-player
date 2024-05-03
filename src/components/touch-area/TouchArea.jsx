@@ -1,33 +1,31 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { TEContext } from '../../contexts/TEContext.js';
 import TouchListener from './TouchListener.jsx';
-// import tangibleSvg from './SVG/tangible.svg';
 import TangibleSvg from './TangibleSvg.jsx';
 import VisualizeTouches from './VisualizeTouches.jsx';
-
-// const touchList = [];
+import TangibleTriangles from './TangibleTriangles.jsx';
 
 // distinguish between touch and tangible
 // Use the context for data
 
 const TouchArea = () => {
-  const tangibles = useContext(TEContext);
   const [tangibleList, setTangibleList] = useState({});
-  // let cTangibleList = {};
+  const { tangibles = [], pointers, status } = useContext(TEContext);
+
+  // if (!status) console.log('TouchArea Status::', status);
+
   useEffect(() => {
-    console.log(tangibles);
+    // console.log('Touch Area Received', tangibles);
     let newList = {};
-    if (tangibles.TANGIBLES && tangibles.TANGIBLES.length > 0) {
-      // console.log('Touch Area Received', tangibles.TANGIBLES);
-      tangibles.TANGIBLES.map((tang) => {
+    if (tangibles && tangibles.length > 0) {
+      console.log('Touch Area Received', tangibles);
+      tangibles.map((tang) => {
         const id = tang.PatternId;
         const puck = { id: tang.PatternId, x: tang.X, y: tang.Y, r: tang.R };
         // console.log('Tangible List: ', id, Object.keys(cTangibleList));
         if (id !== undefined) {
           if (newList[id] === undefined) {
-            // const tempList = newList;
             newList[id] = puck;
-            // cTangibleList = newList;
             setTangibleList(newList);
           }
         }
@@ -35,7 +33,7 @@ const TouchArea = () => {
     }
     // console.log('tangibleList', tangibleList);
   }, [tangibles]);
-  // console.log('Toucharea Redraw', tangibleList)
+
   return (
     <>
       <TouchListener />
@@ -45,6 +43,7 @@ const TouchArea = () => {
           <TangibleSvg key={key} props={tangibleList[key]}></TangibleSvg>
         ))}
       </div>
+      <TangibleTriangles />
     </>
   );
 };
