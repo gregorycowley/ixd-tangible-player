@@ -3,6 +3,7 @@ import { TEContext } from '../../contexts/TEContext.js';
 import TouchListener from './TouchListener.jsx';
 // import tangibleSvg from './SVG/tangible.svg';
 import TangibleSvg from './TangibleSvg.jsx';
+import VisualizeTouches from './VisualizeTouches.jsx';
 
 // const touchList = [];
 
@@ -38,6 +39,7 @@ const TouchArea = () => {
   return (
     <>
       <TouchListener />
+      <VisualizeTouches />
       <div id="touch-area">
         {Object.keys(tangibleList).map((key, index) => (
           <TangibleSvg key={key} props={tangibleList[key]}></TangibleSvg>
