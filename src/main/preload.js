@@ -14,7 +14,7 @@ const updateTangibileEngine = (payload) => ipcRenderer.invoke('update-tangible-e
 // ! The callback variable allows the function to be defined by the caller
 
 const handleTangibleEngineUpdate = (callback) => {
-  console.log('#### handleTangibleEngineUpdate ####');
+  // console.log('#### handleTangibleEngineUpdate ####');
   ipcRenderer.on('tangible-engine-update', (_event, value) => callback(value));
 };
 

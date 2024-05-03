@@ -1,13 +1,13 @@
 import React from 'react';
 
 const TangibleSvg = ({ props }) => {
-  // console.log('TangibleSvg Props: ', Object.values(props)[0]);
+  // console.log('TangibleSvg Props: ', Object.values(props));
   const { id: _id, x: _x, y: _y, r: _r } = props;
   const puckStyle = {
     fontFamily: 'Sans-Serif',
     position: 'absolute',
-    top: `${_x}px`,
-    left: `${_y}px`,
+    top: `${_y}px`,
+    left: `${_x}px`,
     textAnchor: 'middle',
   };
   const cls1 = {

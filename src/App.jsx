@@ -8,7 +8,6 @@ function App() {
   useEffect(() => {
     // console.log('registering listener');
     const callback = (tangibleData) => {
-      // console.log('Puck Data :', tangibleData);
       setPucks(tangibleData);
     };
     window.electronAPI.onTangibleEngineUpdate(callback);

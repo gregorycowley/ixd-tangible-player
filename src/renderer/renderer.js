@@ -52,7 +52,7 @@ const init = () => {
     // this.tangibleInfo = new TangibleInfo();
     // this.tangibleEntity = new Tangible();
     window.electronAPI.onTangibleEngineUpdate((tangibleData) => {
-      console.log('**** onTangibleEngineUpdate Callback ****', tangibleData);
+      // console.log('**** onTangibleEngineUpdate Callback ****', tangibleData);
       // tangibleInfo.update(tangibleData);
       // tangibleEntity.update(tangibleData);
     });
