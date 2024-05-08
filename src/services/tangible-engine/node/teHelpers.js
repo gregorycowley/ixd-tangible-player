@@ -27,7 +27,7 @@ const teInit = (teNode, mainWindow) => {
 
   teNode.on('update', (response) => {
     // console.log('==== Node Update ====');
-    // appendObjectToNewLine(response, 'receive.txt');
+    appendObjectToNewLine(response, 'receive.txt');
     mainWindow.webContents.send('tangible-engine-response', response);
   });
   console.log('==== TE Node Init Complete ====');

@@ -8,7 +8,7 @@ const path = require('node:path');
  * @returns {Promise<void>}
  */
 function appendObjectToNewLine(obj, filename) {
-  return;
+  // return;
   return new Promise((resolve, reject) => {
     // Define the full path for the file
     const filePath = path.join(__dirname, filename);
