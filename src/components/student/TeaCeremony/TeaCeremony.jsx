@@ -11,14 +11,22 @@ const TeaCeremony = ({ children }) => {
   const { tangibles, pointers, status } = useContext(TEContext);
 
   const onSeasonSelect = (season) => {
-    setSelectedSeason(season);
+    console.log('onSeasonSelect', season);
+    // setSelectedSeason(season);
   };
 
   useEffect(() => {
-    if (tangibles !== undefined) {
-      // console.log('-----> tangibles', tangibles[0].PatternId);
-      if (tangibles[0].PatternId == 3) {
+    if (tangibles !== undefined && tangibles.length > 0) {
+      console.log('-----> tangibles', tangibles[0]);
+      // A0 C7 D1 E2
+      if (tangibles[0].PatternId == 0) {
         setSelectedSeason('spring');
+      } else if (tangibles[0].PatternId == 7) {
+        setSelectedSeason('summer');
+      } else if (tangibles[0].PatternId == 1) {
+        setSelectedSeason('fall');
+      } else if (tangibles[0].PatternId == 2) {
+        setSelectedSeason('winter');
       }
     }
   }, [tangibles]);

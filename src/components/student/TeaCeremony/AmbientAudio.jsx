@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react';
 import AudioPlayer from './AudioPlayer.jsx';
 
 import springSrc from './assets/sounds/Spring_Birds.wav';
-import summerSrc from './assets/sounds/Summer_waterdrops.wav';
-import fallSrc from './assets/sounds/fall_leaves.wav';
+import summerSrc from './assets/sounds/Summer_Waterdrops.wav';
+import fallSrc from './assets/sounds/Fall_Leaves.wav';
 import winterSrc from './assets/sounds/Winter_Snow.wav';
 
 function AmbientAudio({ season, ui = true }) {

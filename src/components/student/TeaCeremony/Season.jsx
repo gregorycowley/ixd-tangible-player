@@ -1,5 +1,5 @@
 // Season.jsx
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Background from './Background.jsx';
 import ClickAnimation from './ClickAnimation.jsx';
 import SeasonSelect from './SeasonSelect.jsx';
@@ -9,14 +9,15 @@ const Season = () => {
 
   const handleSeasonSelect = (season) => {
     console.log('handleSeasonSelect', season);
-    setSelectedSeason( season);
+
+    setSelectedSeason(season);
   };
 
   return (
     <>
-      <Background season={selectedSeason}/>
+      <Background season={selectedSeason} />
       <ClickAnimation season={selectedSeason} />
-      <SeasonSelect onSeasonSelect={handleSeasonSelect}/>
+      <SeasonSelect onSeasonSelect={handleSeasonSelect} />
     </>
   );
 };

@@ -29,6 +29,9 @@ const init = () => {
   const enableTangibleEngine = true;
   const listenForUpdates = true;
 
+  window.electronAPI.receiveEcho((msg) => console.log('Echo from Main: ', msg));
+  window.electronAPI.sendEcho('Message to echo back');
+
   if (enableScaleFunction) {
     window.electronAPI.getScreenDims();
     window.electronAPI.fromMain('screen-dimensions', (event, dims) => {

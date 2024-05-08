@@ -1,0 +1,26 @@
+[
+    {
+        "type": "File",
+        "name": "/Users/gregorycowley/Projects/cca-apps/ixd-tangible-player/src/components/student/TeaCeremony/TeaCeremony.jsx",
+        "parent_id": null,
+        "workspaceRoot": "/Users/gregorycowley/Projects/cca-apps/ixd-tangible-player",
+        "workspacePath": "src/components/student/TeaCeremony/TeaCeremony.jsx",
+        "id": "FsPKiA3Lu9deEgYa"
+    },
+    {
+        "type": "File",
+        "name": "/Users/gregorycowley/Projects/cca-apps/ixd-tangible-player/src/components/student/TeaCeremony/Season.jsx",
+        "parent_id": null,
+        "workspaceRoot": "/Users/gregorycowley/Projects/cca-apps/ixd-tangible-player",
+        "workspacePath": "src/components/student/TeaCeremony/Season.jsx",
+        "id": "uB7TU1e23Ym85nMR"
+    },
+    {
+        "type": "File",
+        "name": "/Users/gregorycowley/Projects/cca-apps/ixd-tangible-player/src/components/student/TeaCeremony/SeasonSelect.jsx",
+        "parent_id": null,
+        "workspaceRoot": "/Users/gregorycowley/Projects/cca-apps/ixd-tangible-player",
+        "workspacePath": "src/components/student/TeaCeremony/SeasonSelect.jsx",
+        "id": "oMUq0CxrG1fVu6Wi"
+    }
+]

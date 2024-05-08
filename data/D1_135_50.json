@@ -1,0 +1,20 @@
+{
+  "TYPE": 3,
+  "PATTERNS": null,
+  "TANGIBLES": [
+    {
+      "Id": 1,
+      "PatternId": 1,
+      "R": -1.3987422,
+      "RMSNormalized": -0.131681114,
+      "PointerIds": [1, 0, -1],
+      "Pos": { "x": 715.182068, "y": 724.8737 },
+      "X": 715.182068,
+      "Y": 724.8737
+    }
+  ],
+  "POINTERS": null,
+  "STATUS": true,
+  "DEBUG_TEXT": null,
+  "ID": 0
+}

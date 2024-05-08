@@ -1,5 +1,9 @@
 // SeasonSelect component for selecting the season of the tea ceremony
 import React, { useContext } from 'react';
+import springData from '../../../../data/A0_120_50.json';
+import summerData from '../../../../data/C7_120_70.json';
+import fallData from '../../../../data/D1_135_50.json';
+import winterData from '../../../../data/E2_135_60.json';
 // import { TEContext } from '../TEContext.js';
 
 const SeasonSelect = ({ onSeasonSelect }) => {
@@ -37,15 +41,19 @@ const SeasonSelect = ({ onSeasonSelect }) => {
     const selection = e.target.innerText;
     switch (selection) {
       case 'Sp':
+        window.electronAPI.sendCommandToTE(springData);
         onSeasonSelect('spring');
         break;
       case 'Su':
+        window.electronAPI.sendCommandToTE(summerData);
         onSeasonSelect('summer');
         break;
       case 'Fa':
+        window.electronAPI.sendCommandToTE(fallData);
         onSeasonSelect('fall');
         break;
       case 'Wi':
+        window.electronAPI.sendCommandToTE(winterData);
         onSeasonSelect('winter');
         break;
       default:

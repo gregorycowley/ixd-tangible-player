@@ -9,12 +9,12 @@ import TouchArea from '../components/touch-area/TouchArea.jsx';
 const AppContainer = () => {
   return (
     <div>
-      {true && <TouchArea />}
+      {false && <TouchArea />}
       {false && <TouchMarker />}
       {false && <TouchListener />}
       {false && <TouchGraphics />}
       {false && <Operation />}
-      {false && <TeaCeremony />}
+      {true && <TeaCeremony />}
       {false && <div>No component selected</div>}
     </div>
   );

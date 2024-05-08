@@ -76,12 +76,25 @@ const createWindow = () => {
     console.log('Error creating TE node : ', e);
   }
 
+  // Echos back the message sent from the renderer
+  ipcMain.on('send-command', (event, response) => {
+    console.log('Command request received:', response);
+    // mainWindow.webContents.send('echo-response', echo);
+    mainWindow.webContents.send('tangible-engine-response', response);
+  });
+
+  // Echos back the message sent from the renderer
+  ipcMain.on('send-request-echo', (event, echo) => {
+    // console.log('Echo request received:', echo);
+    mainWindow.webContents.send('echo-response', echo);
+  });
+
   // tangible engine
   ipcMain.on('start-tangible-engine', (event, msg) => {
     try {
       teInit(teNode, mainWindow);
       teStart(teNode);
-      sendTestUpdate(mainWindow);
+      // sendTestUpdate(mainWindow);
     } catch (e) {
       console.log('Error starting TE : ', e);
     }
