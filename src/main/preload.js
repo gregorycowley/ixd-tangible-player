@@ -1,21 +1,50 @@
 // preload.js
 
+// Red (!)
+// Blue (?)
+// Green (*)
+// Yellow (^)
+// Pink (&)
+// Purple (~)
+// Mustard (todo)
+// Grey (//)
+
 const { contextBridge, ipcRenderer } = require('electron/renderer');
 
+// & Init
 const startTangibleEngine = (msg) => ipcRenderer.send('start-tangible-engine', msg);
 
+// & Screen
 const getScreenDims = () => {
   ipcRenderer.send('get-screen-dimensions');
 };
-const sendRequestToTE = (payload) => ipcRenderer.invoke('tangible-engine-request', payload);
+const handleScreenDims = () => {
+  console.log('#### handleScreenDims ####');
+  ipcRenderer.on('screen-dimensions', (event, { width, height }) => {
+    document.getElementById('output').textContent = `Screen dimensions: ${width} x ${height}`;
+  });
+};
 
-// ! Note: Handlers may not be working as expected do to when they being defined and called.
-// ! think hardabout when the funcitons are called.
-// ! The callback variable allows the function to be defined by the caller
+// & TE
+// ? Note: Handlers may not be working as expected do to when they being defined and called.
+// ? think hardabout when the funcitons are called.
+// ? The callback variable allows the function to be defined by the caller
+// * UP
+const sendRequestToTE = (payload) => ipcRenderer.invoke('tangible-engine-request', payload);
 const sendCommandToTE = (msg) => {
   console.log('Sending command:', msg);
   ipcRenderer.send('send-command', msg);
 };
+// * DOWN
+const receiveReponseFromTE = (callback) => {
+  ipcRenderer.on('tangible-engine-response', (_event, value) => callback(value));
+};
+const receivePatternsFromTE = (callback) => {
+  console.log('#### handleTangibleEnginePatterns ####');
+  ipcRenderer.on('tangible-engine-patterns', (_event, value) => callback(value));
+};
+
+// & Test Echo
 const sendEcho = (msg) => {
   console.log('Sending echo request:', msg);
   ipcRenderer.send('send-request-echo', msg);
@@ -25,33 +54,7 @@ const receiveEcho = (callback) => {
   ipcRenderer.on('echo-response', (_event, value) => callback(value));
 };
 
-const receiveReponseFromTE = (callback) => {
-  ipcRenderer.on('tangible-engine-response', (_event, value) => callback(value));
-};
-
-const receivePatternsFromTE = (callback) => {
-  console.log('#### handleTangibleEnginePatterns ####');
-  ipcRenderer.on('tangible-engine-patterns', (_event, value) => callback(value));
-};
-
-const handleReply = () => {
-  console.log('#### handleReply ####');
-  ipcRenderer.on('tangible-engine-request-reply', (_event, arg) => {
-    console.log('REPLY!!', arg);
-  });
-};
-
-const handleScreenDims = () => {
-  console.log('#### handleScreenDims ####');
-  ipcRenderer.on('screen-dimensions', (event, { width, height }) => {
-    document.getElementById('output').textContent = `Screen dimensions: ${width} x ${height}`;
-  });
-};
-
-const testCallback = (value) => {
-  console.log('Callback value:', value);
-};
-
+// & Connections
 contextBridge.exposeInMainWorld('electronAPI', {
   startTangibleEngine: startTangibleEngine,
   sendRequestToTE: sendRequestToTE,
@@ -62,8 +65,19 @@ contextBridge.exposeInMainWorld('electronAPI', {
   receivePatternsFromTE: receivePatternsFromTE,
   getScreenDims: getScreenDims,
   onScreenDims: handleScreenDims,
-  onReply: handleReply,
   fromMain: (channel, func) => {
     ipcRenderer.on(channel, func);
   },
 });
+
+// ~ Unused
+const handleReply = () => {
+  console.log('#### handleReply ####');
+  ipcRenderer.on('tangible-engine-request-reply', (_event, arg) => {
+    console.log('REPLY!!', arg);
+  });
+};
+
+const testCallback = (value) => {
+  console.log('Callback value:', value);
+};
