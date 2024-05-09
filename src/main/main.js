@@ -1,23 +1,10 @@
 // main.js
 // https://www.electronforge.io/config/plugins/webpack
 
-// Red (!)
-// Blue (?)
-// Green (*)
-// Yellow (^)
-// Pink (&)
-// Purple (~)
-// Mustard (todo)
-// Grey (//)
-
 const { app, BrowserWindow, ipcMain, screen } = require('electron');
 const { debug } = require('../util/debug.js');
 const net = require('node:net');
 const TangibleEngineNode = require('../services/tangible-engine/node/node.js');
-
-const TangibleClient = require('../services/tangible-engine/TangibleClient.js');
-const TangibleReactInterface = require('../services/tangible-engine/TangibleReactInterface.js');
-
 const isDev = require('electron-is-dev');
 const config = require('../config.json');
 const os = require('node:os');
@@ -74,9 +61,6 @@ const createWindow = () => {
 
   mainWindow.loadURL(webpackEntry);
 
-  const teNodeClient = new TangibleClient();
-  const teReactInterface = new TangibleReactInterface(mainWindow.webContents);
-
   let teNode = null;
   const port = os.platform == 'darwin' ? 4948 : 4949;
 
@@ -92,24 +76,40 @@ const createWindow = () => {
     console.log('Error creating TE node : ', e);
   }
 
-  // ! Requests From Renderer:
   // Echos back the message sent from the renderer
-
-  ipcMain.on('send-command', teReactInterface.handleCommandResponse);
+  ipcMain.on('send-command', (event, response) => {
+    console.log('Command request received:', response);
+    // mainWindow.webContents.send('echo-response', echo);
+    mainWindow.webContents.send('tangible-engine-response', response);
+  });
 
   // Echos back the message sent from the renderer
-  ipcMain.on('send-request-echo', teReactInterface.handleEchoResponse);
+  ipcMain.on('send-request-echo', (event, echo) => {
+    // console.log('Echo request received:', echo);
+    mainWindow.webContents.send('echo-response', echo);
+  });
 
   // tangible engine
-  ipcMain.on('start-tangible-engine', teReactInterface.handleStart);
+  ipcMain.on('start-tangible-engine', (event, msg) => {
+    try {
+      teInit(teNode, mainWindow);
+      teStart(teNode);
+      // sendTestUpdate(mainWindow);
+    } catch (e) {
+      console.log('Error starting TE : ', e);
+    }
+  });
 
-  ipcMain.handle('tangible-engine-request', teReactInterface.handleRequest);
-
-  ipcMain.on('get-screen-dimensions', (event) => {
-    // console.log('getScreenDims request received');
-    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-    // console.log('getScreenDims reply :: ', width, height, event);
-    event.reply('screen-dimensions', { width, height });
+  ipcMain.handle('tangible-engine-request', async (event, payload) => {
+    console.log(`:::: ${JSON.stringify(payload) || 'no payload'} ::::`);
+    mainWindow.webContents.send('tangible-engine-response', payload);
+    appendObjectToNewLine(payload, 'send.txt');
+    function doSomeWork(arg) {
+      return arg;
+    }
+    const result = await doSomeWork('done');
+    teWrite(teNode, payload);
+    return result;
   });
 
   mainWindow.on('closed', function () {
@@ -132,4 +132,10 @@ app.on('window-all-closed', () => {
   }
 });
 
+ipcMain.on('get-screen-dimensions', (event) => {
+  // console.log('getScreenDims request received');
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  // console.log('getScreenDims reply :: ', width, height, event);
+  event.reply('screen-dimensions', { width, height });
+});
 // src/main/preload.js
