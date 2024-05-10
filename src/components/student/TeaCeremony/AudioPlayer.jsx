@@ -81,7 +81,7 @@ const AudioPlayer = forwardRef(({ src, autoplay, ui = true, loop }, audioRef) =>
     margin: '10px 5px',
   };
 
-  console.log('AudioPlayer rerendering...');
+  // console.log('AudioPlayer rerendering...');
 
   return (
     <div style={controlStyle}>

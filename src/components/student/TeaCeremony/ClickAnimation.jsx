@@ -23,7 +23,7 @@ const ClickAnimation = ({ season = 'Spring' }) => {
       // Get click position
       const x = e.clientX;
       const y = e.clientY;
-      console.log('click', x, y);
+      // console.log('click', x, y);
       // Add the new click position to the state with a unique ID
       setClickPositions((prevPositions) => [...prevPositions, { id: Date.now(), x, y }]);
     };

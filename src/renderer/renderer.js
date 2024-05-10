@@ -19,8 +19,9 @@ window.root = root;
 const teBrowser = new TangibleEngineBrowser();
 teBrowser.requestFunc = async (payload) => {
   // Designed to consolidate all requests to the Tangible Engine service
-  const response = await window.electronAPI.sendRequestToTE(payload);
-  return response;
+  const isDone = await window.electronAPI.sendRequestToTE(payload);
+  // console.log('**** Request Function ****', payload);
+  return isDone;
 };
 teBrowser.init();
 
@@ -35,17 +36,24 @@ const init = () => {
   if (enableScaleFunction) {
     window.electronAPI.getScreenDims();
     window.electronAPI.fromMain('screen-dimensions', (event, dims) => {
-      document.getElementById('output').textContent = `${dims.width} x ${dims.height}`;
+      const scaleValue = 1.45;
       // console.log('From Server: ', dims);
       const scaleFunction = (x, y) => {
-        const xRatio = window.innerWidth / dims.width;
-        const yRatio = window.innerHeight / dims.height;
+        const xRatio = scaleValue;
+        const yRatio = scaleValue;
+        // const xRatio = window.innerWidth / dims.width;
+        // const yRatio = window.innerHeight / dims.height;
         const newX = x * xRatio;
         const newY = y * yRatio;
 
         // console.log('Scale Function: ', dims, window.innerWidth, window.innerHeight);
         return { x: newX, y: newY };
       };
+
+      const scaley = (window.innerWidth / dims.width).toFixed(2);
+      const scalex = (window.innerHeight / dims.height).toFixed(2);
+      document.getElementById('output').textContent =
+        `${window.innerWidth}x${window.innerHeight} | ${dims.width} x ${dims.height} (${scaleValue * 100}%)`;
       teBrowser.scaleFunc = scaleFunction;
       console.log(`**** Screen dims: ${dims.width} x ${dims.height} ****`);
     });

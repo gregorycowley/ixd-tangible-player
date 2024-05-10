@@ -66,7 +66,7 @@ class TangibleEngineBrowser {
    * @memberof TangibleEngineBrowser
    */
   set requestFunc(value) {
-    console.log('---- Setting scale function ----');
+    console.log('---- Setting Request function ----');
     this.requestFunction = value;
   }
   /**
@@ -138,7 +138,7 @@ class TangibleEngineBrowser {
    * @memberof TangibleEngineBrowser
    */
   handleTouch(touchEvent) {
-    // console.log('---- Handling touchs :: ', touchEvent)
+    // console.log('---- Handling touchs :: ', touchEvent);
     this.touches = touchEvent.touches;
   }
   /**
@@ -213,6 +213,7 @@ class TangibleEngineBrowser {
       if (payload.POINTERS.length === 0) return;
       this.isWriting = true;
       try {
+        // console.log('---- Writing to TE ----', payload);
         const result = await this.requestFunction(payload);
         if (result === 'done') this.isWriting = false;
       } catch (error) {

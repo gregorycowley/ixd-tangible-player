@@ -8,7 +8,7 @@ const Season = () => {
   const [selectedSeason, setSelectedSeason] = useState('Spring');
 
   const handleSeasonSelect = (season) => {
-    console.log('handleSeasonSelect', season);
+    // console.log('handleSeasonSelect', season);
 
     setSelectedSeason(season);
   };

@@ -8,26 +8,7 @@ import PersistentGif from '../../PersistentGif.jsx';
 
 function FlowerAnimation({ removeSelf, pos, duration, style, season = 'spring' }) {
   const ref = useRef(null);
-
-  // console.log('FlowerAnimation', pos, duration, style, season);
-  switch (season.toUpperCase()) {
-    case 'SPRING':
-      var gifAnimation = springGIF;
-      break;
-    case 'SUMMER':
-      var gifAnimation = summerGIF;
-      break;
-    case 'AUTUMN':
-      var gifAnimation = autumnGIF;
-      break;
-    case 'FALL':
-      var gifAnimation = autumnGIF;
-      break;
-    case 'WINTER':
-      var gifAnimation = winterGIF;
-      break;
-    default:
-  }
+  let gifAnimation = null;
 
   const animationStyle = {
     position: 'absolute',
@@ -41,18 +22,39 @@ function FlowerAnimation({ removeSelf, pos, duration, style, season = 'spring' }
   };
 
   useEffect(() => {
+    // console.log('FlowerAnimation', pos, duration, style, season);
+    switch (season.toUpperCase()) {
+      case 'SPRING':
+        gifAnimation = springGIF;
+        break;
+      case 'SUMMER':
+        gifAnimation = summerGIF;
+        break;
+      case 'AUTUMN':
+        gifAnimation = autumnGIF;
+        break;
+      case 'FALL':
+        gifAnimation = autumnGIF;
+        break;
+      case 'WINTER':
+        gifAnimation = winterGIF;
+        break;
+      case 'IDLE':
+        gifAnimation = springGIF;
+        break;
+      default:
+    }
+    // console.log('PersistentGif : ', season, gifAnimation);
     // const timer = setTimeout(() => {
     //   removeSelf();
     //   ref.current.style.display = 'none';
     // }, duration); // Remove after 5 seconds
-    // return () => clearTimeout(timer); // Cleanup the timer
-  }, [removeSelf, duration]);
-
-  // console.log('FlowerAnimation', pos, season);
-
+    // return () => clearTimeout(timer); // Cleanup the timerq
+  }, [season]);
+  // console.log('PersistentGif : ', season, gifAnimation);
   return (
     <div className="flower-animation" ref={ref} id={pos.id} key={pos.id} style={animationStyle}>
-      <PersistentGif src={gifAnimation} />
+      {gifAnimation === null ? null : <PersistentGif src={gifAnimation} />}
     </div>
   );
 }

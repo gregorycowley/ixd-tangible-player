@@ -6,6 +6,7 @@ const PersistentGif = ({ src }) => {
 
   // Check if img element is already loaded with the correct src, if not update it
   React.useEffect(() => {
+    console.log('src:', src);
     if (imgRef.current && imgRef.current.src !== src) {
       imgRef.current.src = src;
     }

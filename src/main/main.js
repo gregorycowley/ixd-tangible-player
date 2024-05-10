@@ -52,6 +52,14 @@ const createWindow = () => {
       enableRemoteModule: false,
     },
   });
+
+  const requestQueue = [];
+  const responseFunction = (response) => {
+    console.log(':::: Response Function : ', response);
+    appendObjectToNewLine(response, 'receive.txt');
+    mainWindow.webContents.send('tangible-engine-response', response);
+  };
+
   const isDev = process.env.MODE == 'development';
   if (isDev) {
     mainWindow.webContents.openDevTools();
@@ -92,7 +100,7 @@ const createWindow = () => {
   // tangible engine
   ipcMain.on('start-tangible-engine', (event, msg) => {
     try {
-      teInit(teNode, mainWindow);
+      teInit(teNode, mainWindow, responseFunction);
       teStart(teNode);
       // sendTestUpdate(mainWindow);
     } catch (e) {
@@ -102,7 +110,8 @@ const createWindow = () => {
 
   ipcMain.handle('tangible-engine-request', async (event, payload) => {
     console.log(`:::: ${JSON.stringify(payload) || 'no payload'} ::::`);
-    mainWindow.webContents.send('tangible-engine-response', payload);
+    // mainWindow.webContents.send('tangible-engine-response', payload);
+    requestQueue.push(payload);
     appendObjectToNewLine(payload, 'send.txt');
     function doSomeWork(arg) {
       return arg;

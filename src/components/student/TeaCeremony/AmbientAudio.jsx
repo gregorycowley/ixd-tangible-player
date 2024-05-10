@@ -10,7 +10,7 @@ function AmbientAudio({ season, ui = true }) {
   // Reference to the audio element
   const audioRef = useRef(null);
 
-  console.log('AmbientAudio season:', season);
+  // console.log('AmbientAudio season:', season);
 
   // State to manage whether the audio should loop
   const [loop, setLoop] = useState(false);

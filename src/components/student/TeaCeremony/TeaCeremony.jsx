@@ -17,7 +17,7 @@ const TeaCeremony = ({ children }) => {
 
   useEffect(() => {
     if (tangibles !== undefined && tangibles.length > 0) {
-      console.log('-----> tangibles', tangibles[0]);
+      // console.log('-----> tangibles', tangibles[0]);
       // A0 C7 D1 E2
       if (tangibles[0].PatternId == 0) {
         setSelectedSeason('spring');

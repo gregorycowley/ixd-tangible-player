@@ -11,7 +11,7 @@ const sendTestUpdate = (mainWindow) => {
   }, 2000);
 };
 
-const teInit = (teNode, mainWindow) => {
+const teInit = (teNode, mainWindow, responseFunction) => {
   if (teNode == null) throw new Error('Error: TE Node not initialized');
 
   teNode.on('connect', () => {
@@ -21,19 +21,17 @@ const teInit = (teNode, mainWindow) => {
   teNode.on('disconnect', () => console.log('Disconnected from service'));
 
   teNode.on('patterns', (response) => {
-    // console.log('==== Node Patterns ====');
-    mainWindow.webContents.send('tangible-engine-patterns', response);
+    responseFunction(response);
   });
 
   teNode.on('update', (response) => {
-    // console.log('==== Node Update ====');
-    appendObjectToNewLine(response, 'receive.txt');
-    mainWindow.webContents.send('tangible-engine-response', response);
+    responseFunction(response);
   });
   console.log('==== TE Node Init Complete ====');
 };
 
 const teWrite = (teNode, payload) => {
+  console.log('==== Writing to TE ====', payload);
   if (teNode == null) throw new Error('Error: TE Node not initialized');
   teNode.write(payload);
 };

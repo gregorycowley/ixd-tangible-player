@@ -8,9 +8,15 @@ function useVideoTimecode(videoRef) {
     const video = videoRef.current;
     const update = () => {
       const currentTime = video.currentTime;
-      const hours = Math.floor(currentTime / 3600).toString().padStart(2, '0');
-      const minutes = Math.floor((currentTime % 3600) / 60).toString().padStart(2, '0');
-      const seconds = Math.floor(currentTime % 60).toString().padStart(2, '0');
+      const hours = Math.floor(currentTime / 3600)
+        .toString()
+        .padStart(2, '0');
+      const minutes = Math.floor((currentTime % 3600) / 60)
+        .toString()
+        .padStart(2, '0');
+      const seconds = Math.floor(currentTime % 60)
+        .toString()
+        .padStart(2, '0');
       setTimecode(`${hours}:${minutes}:${seconds}`);
     };
     video.addEventListener('timeupdate', update);
@@ -22,7 +28,6 @@ function useVideoTimecode(videoRef) {
   return timecode;
 }
 
-
 // The HOC that wraps the VideoPlayer component.
 const withVideoTimeTracker = (VideoPlayerComponent) => {
   return ({ src, ...props }) => {
@@ -32,16 +37,17 @@ const withVideoTimeTracker = (VideoPlayerComponent) => {
     return (
       <div style={{ position: 'relative' }}>
         <VideoPlayerComponent ref={videoPlayerRef} src={src} {...props} />
-        <div style={{
-          position: 'absolute',
-          bottom: 10,
-          right: 10,
-          color: '#FFF',
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          padding: '5px',
-          borderRadius: '5px',
-          fontSize: '14px', 
-        }}>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 10,
+            right: 10,
+            color: '#FFF',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            padding: '5px',
+            borderRadius: '5px',
+            fontSize: '14px',
+          }}>
           {timecode}
         </div>
       </div>
@@ -51,9 +57,8 @@ const withVideoTimeTracker = (VideoPlayerComponent) => {
 
 export default withVideoTimeTracker;
 
-
 // function VideoTimeTracker(WrappedComponent) {
-  
+
 //   // const [currentTime, setCurrentTime] = useState(0);
 //   const videoRef = useRef(null);
 
@@ -84,14 +89,11 @@ export default withVideoTimeTracker;
 //   return <VideoPlayerWithTimecode src="path/to/your/video.mp4" />;
 // }
 
-
-
 // Function to format seconds into HH:MM:SS
 
 // function withVideoTimeTracker( WrappedComponent ) {
 //   return <VideoTimeTracker (WrappedComponent);
 // }
-
 
 // const formatTime = (time) => {
 //   const hours = Math.floor(time / 3600).toString().padStart(2, '0');
@@ -99,4 +101,3 @@ export default withVideoTimeTracker;
 //   const seconds = Math.floor(time % 60).toString().padStart(2, '0');
 //   return `${hours}:${minutes}:${seconds}`;
 // };
-
