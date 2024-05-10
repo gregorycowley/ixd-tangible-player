@@ -37,7 +37,7 @@ const init = () => {
   if (enableScaleFunction) {
     window.electronAPI.getScreenDims();
     window.electronAPI.fromMain('screen-dimensions', (event, dims) => {
-      const scaleValue = 1;
+      const scaleValue = 1.45;
       // console.log('From Server: ', dims);
       const scaleFunction = (x, y) => {
         const xRatio = scaleValue;

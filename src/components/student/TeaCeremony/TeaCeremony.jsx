@@ -40,8 +40,8 @@ const TeaCeremony = ({ children }) => {
       <SeasonSelect onSeasonSelect={onSeasonSelect}></SeasonSelect>
       {/* <Season season={selectedSeason}></Season> */}
       <AmbientAudio ui={false} season={selectedSeason}></AmbientAudio>
-      {/* <TouchListener />
-      <TangibleTriangles /> */}
+      {/* <TouchListener /> */}
+      {/* <TangibleTriangles />  */}
       {children}
     </div>
   );

@@ -57,7 +57,48 @@ const createWindow = () => {
   const responseFunction = (response) => {
     // console.log(':::: Response Function : ', response);
     // appendObjectToNewLine(response, 'receive.txt');
-    response.POINTERS = requestQueue.shift();
+    let matchedPointers = response.TANGIBLES;
+    const pointers = requestQueue.shift()
+    const allPointers =  ( pointers !== undefined ) ? pointers.POINTERS : [];
+  
+    if (matchedPointers instanceof Array) {
+
+    } else {
+      matchedPointers = [];
+    }
+    const unmatched = matchedPointers.map( 
+      (tangible) => {
+        return tangible.PointerIds;
+      }
+    )
+
+    function flattenArray(array, depth = Infinity) {
+      return array.flat(depth);
+    }
+    let flattenedPointIds = flattenArray(unmatched)
+  
+    console.log('flattenedPointIds ::', flattenedPointIds)
+
+    console.log("Matched pointers ::", matchedPointers);
+    console.log('All Pointers :: ', allPointers);
+
+    const reducedPointers = allPointers.map(
+      (pointer) => {
+        console.log('checking :: ', pointer.Id)
+        if (!flattenedPointIds.includes(pointer.Id)) {
+          return pointer.Id;
+        }
+      }
+    )
+
+    // response.POINTERS = allPointers.map( (pointer) => {
+    //   if (matchedPointers.includes (pointer.Id)) {
+    //     console.log('match FOund :: ', pointer.Id)
+    //   }
+    // })
+
+    console.log('reducedPointers', reducedPointers)
+
     // console.log('Response', requestQueue)
     mainWindow.webContents.send('tangible-engine-response', response);
   };
