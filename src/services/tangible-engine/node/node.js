@@ -33,7 +33,9 @@ class TangibleEngineNode extends events_1.EventEmitter {
       this.emit('connect');
     });
     this._client.on('data', (data) => {
+      console.log('node Received data:', data);
       const response = this.toObjectBufferPayload(data);
+      console.log('node Received data:', response);
 
       // console.log('++++ Writing to file ++++')
       // // Write the variable to a file

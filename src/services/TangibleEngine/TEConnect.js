@@ -99,6 +99,7 @@ class TEConnect extends events_1.EventEmitter {
       this.emit('connect');
     });
     this._client.on('data', (data) => {
+      console.log('TEConnect Received data:', data);
       const response = this.toObjectBufferPayload(data);
       this.emit(PAYLOAD_TYPES[response.TYPE], response);
       // hydrate patterns

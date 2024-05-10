@@ -72,7 +72,7 @@ const createWindow = () => {
   mainWindow.loadURL(webpackEntry);
 
   let teNode = null;
-  const port = os.platform == 'darwin' ? 4948 : 4949;
+  const port = os.platform == 'darwin' ? 4945 : 4949;
 
   try {
     const socket = net.connect({ host: '127.0.0.1', port: port });
@@ -86,18 +86,17 @@ const createWindow = () => {
     console.log('Error creating TE node : ', e);
   }
 
-
-  const updateStats = ({req, res, queue}) => {
+  const updateStats = ({ req, res, queue }) => {
     const requests = req;
     const responses = res;
     const queueCount = queue.length;
     const result = {
       requests,
       responses,
-      queueCount
-    }
+      queueCount,
+    };
     mainWindow.webContents.send('stat-update', result);
-  }
+  };
 
   // Echos back the message sent from the renderer
   ipcMain.on('send-command', (event, response) => {

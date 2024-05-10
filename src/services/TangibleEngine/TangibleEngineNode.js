@@ -34,6 +34,7 @@ class TEConnect extends events_1.EventEmitter {
     });
     this._client.on('data', (data) => {
       const response = this.toObjectBufferPayload(data);
+      console.log('TENOde Received data:', response);
       this.emit(PAYLOAD_TYPES[response.TYPE], response);
       // hydrate patterns
       if (response.TYPE === 2) {

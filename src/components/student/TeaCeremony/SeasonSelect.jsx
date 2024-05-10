@@ -41,18 +41,22 @@ const SeasonSelect = ({ onSeasonSelect }) => {
     const selection = e.target.innerText;
     switch (selection) {
       case 'Sp':
+        springData.Type = 'ForceA';
         window.electronAPI.sendCommandToTE(springData);
         onSeasonSelect('spring');
         break;
       case 'Su':
+        summerData.Type = 'ForceC';
         window.electronAPI.sendCommandToTE(summerData);
         onSeasonSelect('summer');
         break;
       case 'Fa':
+        fallData.Type = 'ForceD';
         window.electronAPI.sendCommandToTE(fallData);
         onSeasonSelect('fall');
         break;
       case 'Wi':
+        winterData.Type = 'ForceE';
         window.electronAPI.sendCommandToTE(winterData);
         onSeasonSelect('winter');
         break;
