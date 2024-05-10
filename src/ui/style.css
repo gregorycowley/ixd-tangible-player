@@ -11,6 +11,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #04ff00;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #root {
@@ -28,6 +29,22 @@ body {
   font-size: .75rem;
   top: 0;
   right: 0;
+  z-index: 1000;
+}
+
+#tangible {
+  position: absolute;
+  font-size: 1.25rem;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+#tangible-up {
+  position: absolute;
+  font-size: 1.25rem;
+  font-weight: bold;
+  top: 60%;
+  left: 0;
   z-index: 1000;
 }
 

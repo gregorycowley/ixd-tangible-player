@@ -19,6 +19,7 @@ window.root = root;
 const teBrowser = new TangibleEngineBrowser();
 teBrowser.requestFunc = async (payload) => {
   // Designed to consolidate all requests to the Tangible Engine service
+  document.getElementById('tangible-up').textContent = JSON.stringify(payload);
   const isDone = await window.electronAPI.sendRequestToTE(payload);
   // console.log('**** Request Function ****', payload);
   return isDone;
@@ -36,7 +37,7 @@ const init = () => {
   if (enableScaleFunction) {
     window.electronAPI.getScreenDims();
     window.electronAPI.fromMain('screen-dimensions', (event, dims) => {
-      const scaleValue = 1.45;
+      const scaleValue = 1;
       // console.log('From Server: ', dims);
       const scaleFunction = (x, y) => {
         const xRatio = scaleValue;

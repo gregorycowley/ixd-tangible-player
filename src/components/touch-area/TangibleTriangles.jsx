@@ -7,6 +7,9 @@ const TangibleTriangles = () => {
 
   // Create the points string for the 'points' attribute in the SVG polygon element
 
+
+
+
   const style = {
     position: 'absolute',
     top: '0px',
@@ -16,18 +19,25 @@ const TangibleTriangles = () => {
   let count = 0;
   const svgTriangles = patterns.map((pattern, index) => {
     const pointsAttribute = pattern.Points.map(
-      (point) => `${point.X + 200 * count + 100},${point.Y + 300}`
+      (point) => `${point.X},${point.Y}`
     ).join(' ');
-    console.log('TangibleTriangles:: pointsAttribute', pointsAttribute);
+    const posX = 300 + (200 * count);
+    const posY = 300;
+    // console.log('TangibleTriangles:: pointsAttribute', pointsAttribute);
     count++;
     return (
-      <polygon
-        key={index}
-        points={pointsAttribute}
-        fill="limegreen"
-        stroke="black"
-        strokeWidth="2"
-      />
+      <g key={index} transform={`translate(${posX}, ${posY})`}>
+        <polygon
+          
+          points={pointsAttribute}
+          fill="limegreen"
+          stroke="black"
+          strokeWidth="2"
+        />
+        <text x="40" y="40" fontFamily="Arial" fontSize="40" fill="white" textAnchor="middle" dominantBaseline="middle">
+                {pattern.PatternId}
+        </text>
+      </g>
     );
   });
 

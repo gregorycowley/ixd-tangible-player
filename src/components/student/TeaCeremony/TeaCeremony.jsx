@@ -5,6 +5,7 @@ import ClickAnimation from './ClickAnimation.jsx';
 import SeasonSelect from './SeasonSelect.jsx';
 import { TEContext } from '../../../contexts/TEContext.js';
 import TouchListener from '../../touch-area/TouchListener.jsx';
+import TangibleTriangles from '../../touch-area/TangibleTriangles.jsx';
 
 const TeaCeremony = ({ children }) => {
   const [selectedSeason, setSelectedSeason] = useState('idle');
@@ -16,7 +17,8 @@ const TeaCeremony = ({ children }) => {
   };
 
   useEffect(() => {
-    if (tangibles !== undefined && tangibles.length > 0) {
+    console.log('-----> tangibles', tangibles);
+    if (tangibles !== undefined && tangibles != null && tangibles.length > 0) {
       // console.log('-----> tangibles', tangibles[0]);
       // A0 C7 D1 E2
       if (tangibles[0].PatternId == 0) {
@@ -38,7 +40,8 @@ const TeaCeremony = ({ children }) => {
       <SeasonSelect onSeasonSelect={onSeasonSelect}></SeasonSelect>
       {/* <Season season={selectedSeason}></Season> */}
       <AmbientAudio ui={false} season={selectedSeason}></AmbientAudio>
-      <TouchListener />
+      {/* <TouchListener />
+      <TangibleTriangles /> */}
       {children}
     </div>
   );

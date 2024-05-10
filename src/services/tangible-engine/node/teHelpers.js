@@ -31,7 +31,7 @@ const teInit = (teNode, mainWindow, responseFunction) => {
 };
 
 const teWrite = (teNode, payload) => {
-  console.log('==== Writing to TE ====', payload);
+  // console.log('==== Writing to TE ====', payload);
   if (teNode == null) throw new Error('Error: TE Node not initialized');
   teNode.write(payload);
 };

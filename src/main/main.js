@@ -55,8 +55,10 @@ const createWindow = () => {
 
   const requestQueue = [];
   const responseFunction = (response) => {
-    console.log(':::: Response Function : ', response);
-    appendObjectToNewLine(response, 'receive.txt');
+    // console.log(':::: Response Function : ', response);
+    // appendObjectToNewLine(response, 'receive.txt');
+    response.POINTERS = requestQueue.shift();
+    // console.log('Response', requestQueue)
     mainWindow.webContents.send('tangible-engine-response', response);
   };
 
@@ -84,6 +86,19 @@ const createWindow = () => {
     console.log('Error creating TE node : ', e);
   }
 
+
+  const updateStats = ({req, res, queue}) => {
+    const requests = req;
+    const responses = res;
+    const queueCount = queue.length;
+    const result = {
+      requests,
+      responses,
+      queueCount
+    }
+    mainWindow.webContents.send('stat-update', result);
+  }
+
   // Echos back the message sent from the renderer
   ipcMain.on('send-command', (event, response) => {
     console.log('Command request received:', response);
@@ -109,10 +124,11 @@ const createWindow = () => {
   });
 
   ipcMain.handle('tangible-engine-request', async (event, payload) => {
-    console.log(`:::: ${JSON.stringify(payload) || 'no payload'} ::::`);
+    // console.log(`:::: ${JSON.stringify(payload) || 'no payload'} ::::`);
     // mainWindow.webContents.send('tangible-engine-response', payload);
     requestQueue.push(payload);
-    appendObjectToNewLine(payload, 'send.txt');
+    // console.log('Request', requestQueue)
+    // appendObjectToNewLine(payload, 'send.txt');
     function doSomeWork(arg) {
       return arg;
     }

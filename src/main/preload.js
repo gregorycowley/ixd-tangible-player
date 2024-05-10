@@ -34,6 +34,14 @@ const receivePatternsFromTE = (callback) => {
   ipcRenderer.on('tangible-engine-patterns', (_event, value) => callback(value));
 };
 
+const receiveStats = () => {
+  ipcRenderer.on( 'stat-update', (event, msg) => {
+    console.log('Stat Update: ', msg)
+    document.getElementById('stats').textContent = `Stats:: ${msg}`;
+  })
+  
+}
+
 const handleReply = () => {
   console.log('#### handleReply ####');
   ipcRenderer.on('tangible-engine-request-reply', (_event, arg) => {
@@ -60,6 +68,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   receiveEcho: receiveEcho,
   receiveReponseFromTE: receiveReponseFromTE,
   receivePatternsFromTE: receivePatternsFromTE,
+  receiveStats: receiveStats,
   getScreenDims: getScreenDims,
   onScreenDims: handleScreenDims,
   onReply: handleReply,

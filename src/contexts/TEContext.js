@@ -8,6 +8,17 @@ export const TEProvider = ({ children }) => {
   useEffect(() => {
     // console.log('registering listener');
     const callback = (tangibleData) => {
+      // document.getElementById('tangible').textContent = JSON.stringify(tangibleData);
+        // Designed to consolidate all requests to the Tangible Engine service
+      if ( tangibleData.TANGIBLES !== undefined &&  tangibleData.TANGIBLES !== null && tangibleData.TANGIBLES.length > 0){
+        const patternIDS = tangibleData.TANGIBLES.map((tangible, index) =>{
+          return `${tangible.PatternId} :: ${JSON.stringify(tangible.PointerIds)}`;
+        })
+        document.getElementById('tangible').textContent = `--> ${JSON.stringify(patternIDS)} --> ${JSON.stringify(tangibleData.POINTERS)}`;
+      } else {
+        document.getElementById('tangible').textContent = 'No Tangibles';
+      }
+
       setPucks({
         tangibles: tangibleData.TANGIBLES,
         pointers: tangibleData.POINTERS,
